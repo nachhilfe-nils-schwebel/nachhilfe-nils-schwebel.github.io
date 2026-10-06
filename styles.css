@@ -49,7 +49,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .hero-details { display: grid; gap: 8px; margin-top: 24px; }
 .hero-rate { margin-top: 24px; }
 .hero-rate strong { font-weight: 700; }
-.hero-copy .note { margin-top: 4px; }
+.hero-online-rate { margin-top: 4px; }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 24px; margin-top: 28px; }
 .hero-photo { margin: 0; min-width: 0; }
 .hero-photo figcaption { margin-top: 10px; color: var(--muted); font-size: var(--small); }
@@ -64,7 +64,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .pricing-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start; }
 .pricing-intro p { margin-top: 24px; max-width: 360px; }
 .pricing-intro .button { margin-top: 28px; }
-.pricing-contact { display: block; width: fit-content; margin-top: 16px; }
+.pricing-intro .pricing-alternative { margin-top: 16px; }
 .price-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px; }
 .price-format h3 { font-weight: 600; }
 .price-format dl { margin: 20px 0 0; border-top: 1px solid #cfd6ca; }
