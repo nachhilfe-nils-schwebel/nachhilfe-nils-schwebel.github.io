@@ -1,8 +1,6 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'tutoring-trial-selection';
-
   function berlinClock() {
     const parts = new Intl.DateTimeFormat('en-GB', {
       timeZone: 'Europe/Berlin', year: 'numeric', month: '2-digit', day: '2-digit',
@@ -25,7 +23,6 @@
   }
 
   function clear() {
-    try { sessionStorage.removeItem(STORAGE_KEY); } catch { /* URL state works when storage is unavailable. */ }
     const url = new URL(window.location.href);
     for (const name of ['lessonDate', 'lessonTime', 'lessonFormat']) url.searchParams.delete(name);
     window.history.replaceState(null, '', url);
@@ -40,13 +37,12 @@
     if (parameters.has('lessonDate') || parameters.has('lessonTime') || parameters.has('lessonFormat')) {
       return validate({ date: parameters.get('lessonDate'), time: parameters.get('lessonTime'), format: parameters.get('lessonFormat') });
     }
-    try { return validate(JSON.parse(sessionStorage.getItem(STORAGE_KEY))); } catch { return null; }
+    return null;
   }
 
   function contactUrl(value) {
     const selection = validate(value);
     if (!selection || !window.Availability?.contains(selection)) return null;
-    try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(selection)); } catch { /* Keep the selection in the navigation URL as well. */ }
     const url = new URL('contact.html', window.location.href);
     url.searchParams.set('lang', window.siteLanguage === 'en' ? 'en' : 'de');
     url.searchParams.set('lessonDate', selection.date);

@@ -5,3 +5,8 @@ node_modules/
 server/calendar-config.local.json
 __pycache__/
 *.py[cod]
+dist/
+
+# Source portraits stay local; the website uses sanitized compressed copies.
+assets/avatar1.png
+assets/avatar2.jpeg

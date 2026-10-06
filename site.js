@@ -22,7 +22,9 @@
       'pricing.60': '60 Minuten', 'pricing.90': '90 Minuten',
       'pricing.inperson.60': '25 €', 'pricing.inperson.90': '32 €',
       'pricing.online.60': '22 €', 'pricing.online.90': '28 €',
-      'footer.draft': 'Website-Entwurf', 'booking.home': 'Zur Startseite'
+      'footer.imprint': 'Impressum', 'footer.privacy': 'Datenschutz', 'footer.navigation': 'Rechtliche Informationen',
+      'privacy.form.note': 'Informationen zur Verarbeitung deiner Angaben:',
+      'legal.home': 'Zurück zur Startseite', 'booking.home': 'Zur Startseite'
     },
     en: {
       skip: 'Skip to content',
@@ -44,14 +46,36 @@
       'pricing.60': '60 minutes', 'pricing.90': '90 minutes',
       'pricing.inperson.60': '€25', 'pricing.inperson.90': '€32',
       'pricing.online.60': '€22', 'pricing.online.90': '€28',
-      'footer.draft': 'Website draft', 'booking.home': 'Back to home'
+      'footer.imprint': 'Legal notice', 'footer.privacy': 'Privacy', 'footer.navigation': 'Legal information',
+      'privacy.form.note': 'How your information is processed:',
+      'legal.home': 'Back to home', 'booking.home': 'Back to home'
     }
   };
 
+  function updatePageMetadata() {
+    const canonical = document.querySelector('link[rel="canonical"][data-canonical-base]');
+    if (!canonical) return;
+    const english = document.documentElement.lang === 'en';
+    const url = new URL(canonical.dataset.canonicalBase);
+    if (english) url.searchParams.set('lang', 'en');
+    canonical.href = url.href;
+    const description = document.querySelector('meta[name="description"]')?.content || '';
+    const values = {
+      'og:title': document.title, 'og:description': description, 'og:url': url.href,
+      'og:locale': english ? 'en_GB' : 'de_DE', 'og:locale:alternate': english ? 'de_DE' : 'en_GB',
+      'og:image:alt': copy[english ? 'en' : 'de']['portrait.alt'],
+      'twitter:title': document.title, 'twitter:description': description,
+      'twitter:image:alt': copy[english ? 'en' : 'de']['portrait.alt']
+    };
+    for (const [key, value] of Object.entries(values)) {
+      const element = document.querySelector(`meta[property="${key}"], meta[name="${key}"]`);
+      if (element) element.content = value;
+    }
+  }
+  window.SiteMetadata = Object.freeze({ update: updatePageMetadata });
+
   const languageFromUrl = new URLSearchParams(window.location.search).get('lang');
-  let rememberedLanguage;
-  try { rememberedLanguage = localStorage.getItem('tutoring-language'); } catch { /* URL language remains available when storage is blocked. */ }
-  window.siteLanguage = ['de', 'en'].includes(languageFromUrl) ? languageFromUrl : (rememberedLanguage === 'en' ? 'en' : 'de');
+  window.siteLanguage = languageFromUrl === 'en' ? 'en' : 'de';
 
   function setLanguage(language, updateUrl = false) {
     window.siteLanguage = language;
@@ -77,6 +101,8 @@
     if (wordmark) wordmark.setAttribute('aria-label', language === 'de' ? 'Nils Schwebel – Startseite' : 'Nils Schwebel – Home');
     const nav = document.querySelector('.main-nav');
     if (nav) nav.setAttribute('aria-label', language === 'de' ? 'Hauptnavigation' : 'Main navigation');
+    const footer = document.querySelector('.footer-links');
+    if (footer) footer.setAttribute('aria-label', copy[language]['footer.navigation']);
     if (document.getElementById('hero-title')) {
       document.title = language === 'de' ? 'Nachhilfe in Leipzig & online · Nils Schwebel' : 'Private tutoring in Leipzig & online · Nils Schwebel';
       document.querySelector('meta[name="description"]').content = language === 'de'
@@ -87,8 +113,8 @@
       const url = new URL(window.location.href);
       url.searchParams.set('lang', language);
       window.history.replaceState(null, '', url);
-      try { localStorage.setItem('tutoring-language', language); } catch { /* Language can still be carried through links. */ }
     }
+    updatePageMetadata();
     document.dispatchEvent(new CustomEvent('languagechange', { detail: { language } }));
   }
 

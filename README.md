@@ -13,7 +13,7 @@ Run `python3 -m http.server 4173 --bind 127.0.0.1` from this folder, then open `
 - Online: €22 for 60 minutes, €28 for 90 minutes.
 - The first trial lesson is free and lasts 45 minutes.
 - The introduction uses Nils’s supplied background: age 21, mathematics student, tutoring since 2022, small-group teaching at Sprachschule Nachhilfe Firstclass and Schülerhilfe, and private one-to-one tutoring for several years.
-- `assets/avatar1.png` and `assets/avatar2.jpeg` are the supplied originals. The homepage uses compressed copies, `assets/portrait.jpg` and `assets/about.jpg`.
+- The homepage uses `assets/portrait.jpg` and `assets/about.jpg`, compressed copies of the supplied portraits. Private image metadata is removed; orientation and colour profiles are preserved.
 
 ## Booking and contact
 
@@ -23,7 +23,7 @@ Format, day and time selections enable **Continue to contact**. The selected les
 
 The contact page also accepts direct enquiries. Email or phone is required, together with a nonempty message. The form uses Web3Forms, configured in `contact-config.js` with the supplied access key. These keys are designed for public browser forms ([Web3Forms FAQ](https://docs.web3forms.com/getting-started/faq)).
 
-Submissions use the [Web3Forms endpoint](https://docs.web3forms.com/getting-started/api-reference) and display success only after a successful HTTP response and `success: true`. Failed or unconfirmed requests retain the entered details. A hidden honeypot is included. No enquiry is sent automatically and no contact details are saved in browser storage. Only the selected lesson is temporarily kept in the URL and session storage.
+Submissions use the [Web3Forms endpoint](https://docs.web3forms.com/getting-started/api-reference) and display success only after a successful HTTP response and `success: true`. Failed or unconfirmed requests retain the entered details. A hidden honeypot is included. No enquiry is sent automatically and no contact details are saved in browser storage. Language and selected lessons are carried in the navigation URL. The privacy page explains hosting and form processing.
 
 ## Files
 
@@ -36,18 +36,23 @@ Submissions use the [Web3Forms endpoint](https://docs.web3forms.com/getting-star
 - `lesson-selection.js`: validates and carries a selected trial to contact; direct contact clears a previous selection.
 - `contact.html`, `contact.css`, `contact.js`: enquiry form, lesson card, validation and Web3Forms submission.
 - `contact-config.js`: public Web3Forms access key.
+- `imprint.html`, `privacy.html`, `legal.js`: bilingual provider details and privacy information, linked from every footer and the form.
+- `scripts/build_site.py`: validates and packages an explicit public-file allowlist into `dist/`; local state, server code, tests and original photos are excluded.
+- `.github/workflows/pages.yml`: verifies and deploys the public artifact after each push to `main`, including calendar availability updates.
 - `assets/fonts/`: locally hosted DM Serif Display for main headings and DM Sans for text and controls, with their Open Font Licenses and source information.
 
 ## GitHub Pages
 
-Intended address: https://nachhilfe-nils-schwebel.github.io/.
+Production address: https://nachhilfe-nils-schwebel.github.io/.
 
-After approving the draft, merge the pull request and select **Settings → Pages → Deploy from a branch → main → / (root)**. `.nojekyll` serves the static files directly. Hosting has not been enabled as part of this draft.
+Pages uses **GitHub Actions** as the publishing source. The workflow validates calendar and form behavior, prepares only public website files, and deploys after each push to `main`. It also runs checks on pull requests without publishing them. The website itself remains buildless static HTML/CSS/JavaScript; the packaging step controls which files become public.
 
-## Before launch
+## Calendar activation
 
-Add the imprint/privacy pages and activate the Calendar updater on the other Mac. Calendar identifiers, private event details, local build files and credentials remain outside the public static repository.
+Activate the Calendar updater on the other Mac using [server/README.md](server/README.md). Until its first successful publish, trial availability is empty and visitors are directed to contact. Calendar identifiers, private event details, local build files and credentials remain outside the public static repository. The updater pushes only `availability.json` to `main`; the workflow deploys the change automatically.
 
 ## Tests
 
 Run `python3 -m unittest discover -s tests -p 'test_*.py'` for scheduling, Calendar bridge and isolated Git publishing checks. Run `npm ci` then `npm test` for browser logic tests (requires the Node version specified in `package.json`). The live website has no npm dependency or build step. Tests simulate form responses and do not send enquiries.
+
+Run `python3 scripts/build_site.py` to validate and prepare the same public artifact used for deployment. Both portraits retain their displayed appearance after metadata removal. Earlier draft history may still contain original images; the production artifact excludes them.

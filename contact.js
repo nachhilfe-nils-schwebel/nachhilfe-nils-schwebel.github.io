@@ -20,13 +20,13 @@
       'lesson.price.label': 'Preis', 'lesson.price': 'Kostenlos',
       'lesson.note': 'Ich bestätige den Termin persönlich. Deine Anfrage reserviert noch keinen Termin.',
       'lesson.change': 'Termin ändern', 'lesson.clear': 'Ohne Termin anfragen',
-      'delivery.unconfigured': 'Entwurf: Der Nachrichtenversand ist noch nicht eingerichtet. Es werden noch keine Nachrichten verschickt.',
+      'delivery.unconfigured': 'Nachrichten können gerade nicht gesendet werden. Bitte versuche es später erneut.',
       'delivery.configured': 'Deine Anfrage wird über das Kontaktformular übermittelt.',
       'validation.contact': 'Bitte gib eine E-Mail-Adresse oder Telefonnummer an.',
       'validation.email': 'Bitte gib eine gültige E-Mail-Adresse an.',
       'validation.phone': 'Bitte gib eine gültige Telefonnummer mit 6 bis 15 Ziffern an.',
       'validation.message': 'Bitte schreibe eine Nachricht.',
-      'status.unconfigured': 'Der Nachrichtenversand ist noch nicht eingerichtet. Deine Angaben bleiben im Formular erhalten; es wurde nichts verschickt.',
+      'status.unconfigured': 'Deine Nachricht konnte nicht gesendet werden. Deine Angaben bleiben im Formular erhalten. Bitte versuche es später erneut.',
       'status.sending': 'Deine Anfrage wird übermittelt …',
       'status.submitted': 'Deine Nachricht wurde übermittelt.',
       'status.submittedLesson': 'Deine Anfrage wurde übermittelt. Ich gebe dir sehr bald Bescheid, ob der Termin klappt.',
@@ -51,13 +51,13 @@
       'lesson.price.label': 'Price', 'lesson.price': 'Free',
       'lesson.note': 'I’ll confirm the time personally. Your enquiry does not reserve a time yet.',
       'lesson.change': 'Change time', 'lesson.clear': 'Contact without a lesson',
-      'delivery.unconfigured': 'Draft: Message delivery is not configured yet. No messages will be sent.',
+      'delivery.unconfigured': 'Messages can’t currently be sent. Please try again later.',
       'delivery.configured': 'Your enquiry will be submitted through the contact form.',
       'validation.contact': 'Please enter an email address or phone number.',
       'validation.email': 'Please enter a valid email address.',
       'validation.phone': 'Please enter a valid phone number with 6 to 15 digits.',
       'validation.message': 'Please write a message.',
-      'status.unconfigured': 'Message delivery is not configured yet. Your details remain in the form; nothing has been sent.',
+      'status.unconfigured': 'Your message could not be sent. Your details remain in the form. Please try again later.',
       'status.sending': 'Submitting your enquiry …',
       'status.submitted': 'Your message was submitted.',
       'status.submittedLesson': 'Your enquiry was submitted. I’ll let you know very soon whether the time works.',
@@ -186,6 +186,7 @@
     });
     document.title = `${translate('title')} · Nils Schwebel`;
     document.querySelector('meta[name="description"]').content = translate('meta.description');
+    window.SiteMetadata?.update();
     document.getElementById('delivery-note').textContent = translate(`delivery.${accessKey() ? 'configured' : 'unconfigured'}`);
     document.getElementById('delivery-note').hidden = !!accessKey();
     if (statusKey) status.textContent = translate(statusKey);

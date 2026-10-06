@@ -18,13 +18,13 @@
       title: 'Kostenlose Probestunde',
       'calendar.note': 'Die Termine werden regelmäßig aktualisiert. Ich bestätige deine Probestunde persönlich.',
       loading: 'Freie Termine werden geladen …',
-      unconfigured: 'Die Kalenderanbindung wird eingerichtet. Du kannst mir bereits direkt schreiben.',
+      unconfigured: 'Freie Termine sind gerade nicht online verfügbar. Schreib mir, dann finden wir gemeinsam einen passenden Termin.',
       stale: 'Die Terminübersicht wird aktualisiert. Bitte versuche es später erneut oder schreib mir direkt.',
-      error: 'Die freien Termine konnten nicht geladen werden. Bitte versuche es erneut oder schreib mir direkt.',
+      error: 'Freie Termine können gerade nicht angezeigt werden. Bitte versuche es erneut oder schreib mir direkt.',
       retry: 'Erneut laden', contact: 'Zum Kontaktformular ↗',
       'calendar.title': 'Termin auswählen', 'format.title': 'Unterrichtsformat',
       'format.leipzig': 'In Leipzig', 'format.online': 'Online',
-      'date.title': 'Tag', 'time.title': 'Uhrzeit', timezone: 'Alle Zeiten: Leipzig (Europe/Berlin)',
+      'date.title': 'Tag', 'time.title': 'Uhrzeit', timezone: 'Alle Zeiten: Leipziger Zeit',
       'summary.title': 'Dein Termin',
       'summary.duration.label': 'Dauer', 'summary.duration': '45 Minuten',
       'summary.price.label': 'Preis', 'summary.price': 'Kostenlos', 'summary.format.label': 'Format',
@@ -42,13 +42,13 @@
       title: 'Free trial lesson',
       'calendar.note': 'Times are updated regularly. I’ll confirm your trial lesson personally.',
       loading: 'Loading available times …',
-      unconfigured: 'Calendar integration is being set up. You can already contact me directly.',
+      unconfigured: 'Available times aren’t currently shown online. Contact me and we’ll find a suitable time together.',
       stale: 'The availability list is being updated. Please try again later or contact me directly.',
-      error: 'Available times could not be loaded. Please try again or contact me directly.',
+      error: 'Available times can’t currently be shown. Please try again or contact me directly.',
       retry: 'Try again', contact: 'Contact me ↗',
       'calendar.title': 'Choose a time', 'format.title': 'Lesson format',
       'format.leipzig': 'In Leipzig', 'format.online': 'Online',
-      'date.title': 'Day', 'time.title': 'Time', timezone: 'All times: Leipzig (Europe/Berlin)',
+      'date.title': 'Day', 'time.title': 'Time', timezone: 'All times: Leipzig time',
       'summary.title': 'Your lesson',
       'summary.duration.label': 'Duration', 'summary.duration': '45 minutes',
       'summary.price.label': 'Price', 'summary.price': 'Free', 'summary.format.label': 'Format',
@@ -83,6 +83,34 @@
   const displayTime = time => language === 'de' ? `${time} Uhr` : time;
   const dateSlots = key => slots.filter(slot => slot.date === key);
 
+  function calendarFocus() {
+    const active = document.activeElement;
+    if (active?.matches('#booking-days button[data-date]')) return { group: 'days', key: active.dataset.date };
+    if (active?.matches('#booking-times button[data-slot]')) return { group: 'times', key: active.dataset.slot };
+    return null;
+  }
+
+  function restoreCalendarFocus(previous) {
+    if (!previous) return;
+    const key = previous.group === 'days' ? 'date' : 'slot';
+    const buttons = [...get(`booking-${previous.group}`).querySelectorAll('button:not(:disabled)')];
+    // Recreated buttons should keep keyboard focus after polling or translation.
+    // If that time disappears, focus the next available option without selecting it.
+    let target = buttons.find(button => button.dataset[key] === previous.key)
+      || buttons.find(button => button.dataset[key] > previous.key) || buttons[0];
+    if (!target && previous.group === 'times') {
+      const days = [...get('booking-days').querySelectorAll('button:not(:disabled)')];
+      target = days.find(button => button.dataset.date >= previous.key.slice(0, 10)) || days[0];
+    }
+    if (!target) {
+      const status = get('availability-status');
+      const noSlots = get('booking-times').querySelector('.no-slots');
+      target = !status.hidden ? status : noSlots && !noSlots.hidden ? noSlots : null;
+      if (target) target.tabIndex = -1;
+    }
+    target?.focus({ preventScroll: true });
+  }
+
   function applyCopy() {
     document.querySelectorAll('[data-booking-i18n]').forEach(element => {
       const value = t(element.dataset.bookingI18n);
@@ -90,6 +118,7 @@
     });
     document.title = t('titleTag');
     document.querySelector('meta[name="description"]').content = t('description');
+    window.SiteMetadata?.update();
     get('previous-week').setAttribute('aria-label', t('previousWeek'));
     get('next-week').setAttribute('aria-label', t('nextWeek'));
     get('booking-days').setAttribute('aria-label', t('daysGroup'));
@@ -165,6 +194,7 @@
   }
 
   function render() {
+    const previousFocus = calendarFocus();
     applyCopy();
     const state = window.Availability.getState();
     get('availability-status').textContent = state.status === 'ready' ? '' : t(state.status);
@@ -174,6 +204,7 @@
     renderDays();
     renderTimes();
     renderSummary();
+    restoreCalendarFocus(previousFocus);
   }
 
   function refreshAvailability() {

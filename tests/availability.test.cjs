@@ -119,7 +119,8 @@ test('unconfigured calendar shows no available booking times, with retry and dir
   b.run('availability.js'); b.run('lesson-selection.js'); b.run('booking.js'); await flush();
   assert.equal(b.w.document.querySelectorAll('.time-button').length, 0);
   assert.equal(b.w.document.getElementById('booking-continue').disabled, true);
-  assert.match(b.w.document.getElementById('availability-status').textContent, /eingerichtet/);
+  assert.match(b.w.document.getElementById('availability-status').textContent, /passenden Termin/);
+  assert.doesNotMatch(b.w.document.getElementById('availability-status').textContent, /Kalenderanbindung|eingerichtet|Beispiel/);
   assert.equal(b.w.document.getElementById('availability-retry').hidden, false);
   assert.ok(b.w.document.querySelector('.availability-actions a[href*="direct=1"]'));
 });
@@ -157,6 +158,62 @@ test('booking ignores an old continuation when selection changes during its refr
   release(reply(fixture())); await flush();
   assert.match(b.w.document.getElementById('selection-label').textContent, /16:15/);
   assert.equal(b.errors.length, 0);
+});
+
+test('unchanged background refresh preserves keyboard focus on both day and time buttons', async t => {
+  const b = browser('booking.html'); t.after(() => b.dom.window.close());
+  b.w.fetch = async () => reply(fixture());
+  b.run('availability.js'); b.run('lesson-selection.js'); b.run('booking.js'); await flush();
+  b.w.document.querySelector('[data-date="2026-10-06"]').focus();
+  await b.w.Availability.refresh();
+  assert.equal(b.w.document.activeElement.dataset.date, '2026-10-06');
+  b.w.document.querySelector('[data-slot="2026-10-06_16:15"]').focus();
+  await b.w.Availability.refresh();
+  assert.equal(b.w.document.activeElement.dataset.slot, '2026-10-06_16:15');
+  assert.equal(b.w.document.getElementById('booking-continue').disabled, true);
+  b.w.document.dispatchEvent(new b.w.CustomEvent('languagechange', { detail: { language: 'en' } }));
+  assert.equal(b.w.document.activeElement.dataset.slot, '2026-10-06_16:15');
+});
+
+test('a removed focused time moves focus to another available time without selecting it', async t => {
+  const b = browser('booking.html'); t.after(() => b.dom.window.close());
+  let data = fixture(); b.w.fetch = async () => reply(data);
+  b.run('availability.js'); b.run('lesson-selection.js'); b.run('booking.js'); await flush();
+  b.w.document.querySelector('[data-slot="2026-10-06_15:30"]').click();
+  b.w.document.querySelector('[data-slot="2026-10-06_15:30"]').focus();
+  data = fixture({ slots: [{ date: '2026-10-06', time: '16:15' }] });
+  await b.w.Availability.refresh();
+  assert.equal(b.w.document.activeElement.dataset.slot, '2026-10-06_16:15');
+  assert.equal(b.w.document.activeElement.getAttribute('aria-pressed'), 'false');
+  assert.equal(b.w.document.getElementById('booking-continue').disabled, true);
+});
+
+test('a removed focused day moves focus to another enabled day', async t => {
+  const b = browser('booking.html'); t.after(() => b.dom.window.close());
+  let data = fixture(); b.w.fetch = async () => reply(data);
+  b.run('availability.js'); b.run('lesson-selection.js'); b.run('booking.js'); await flush();
+  b.w.document.querySelector('[data-date="2026-10-06"]').focus();
+  data = fixture({ slots: [{ date: '2026-10-07', time: '15:30' }] });
+  await b.w.Availability.refresh();
+  assert.equal(b.w.document.activeElement.dataset.date, '2026-10-07');
+  assert.equal(b.w.document.activeElement.disabled, false);
+});
+
+test('when no focused calendar option remains, focus moves to the visible availability message', async t => {
+  const b = browser('booking.html'); t.after(() => b.dom.window.close());
+  b.w.fetch = async () => reply(fixture());
+  b.run('availability.js'); b.run('lesson-selection.js'); b.run('booking.js'); await flush();
+  b.w.document.querySelector('[data-slot="2026-10-06_15:30"]').focus();
+  b.w.fetch = async () => { throw new Error('offline'); };
+  await b.w.Availability.refresh();
+  assert.equal(b.w.document.activeElement.id, 'availability-status');
+  assert.equal(b.w.document.activeElement.hidden, false);
+  assert.match(b.w.document.activeElement.textContent, /schreib mir direkt/);
+  b.w.fetch = async () => reply(fixture()); await b.w.Availability.refresh();
+  b.w.document.querySelector('[data-date="2026-10-06"]').focus();
+  b.w.fetch = async () => reply(fixture({ slots: [] })); await b.w.Availability.refresh();
+  assert.equal(b.w.document.activeElement.className, 'no-slots');
+  assert.match(b.w.document.activeElement.textContent, /keine Termine frei/);
 });
 
 function fillContact(w) {
@@ -327,4 +384,136 @@ test('changing language preserves selected lesson and form values with translate
   assert.equal(b.w.document.getElementById('selected-lesson').hidden, false);
   assert.equal(b.w.document.getElementById('client-message').value, 'Mathe, Klasse 8');
   assert.match(b.w.document.getElementById('lesson-datetime').textContent, /Leipzig time/);
+});
+
+for (const file of ['index.html', 'booking.html', 'contact.html']) test(`${file} sharing metadata follows language and excludes lesson selection parameters`, async t => {
+  const b = browser(file, '?lang=en&lessonDate=2026-10-06&lessonTime=15%3A30&lessonFormat=online');
+  t.after(() => b.dom.window.close());
+  b.w.fetch = async () => reply(fixture());
+  b.run('site.js');
+  if (file !== 'index.html') {
+    b.run('availability.js'); b.run('lesson-selection.js');
+    b.run(file === 'booking.html' ? 'booking.js' : 'contact.js');
+  }
+  await flush();
+  const base = `https://nachhilfe-nils-schwebel.github.io/${file === 'index.html' ? '' : file}`;
+  const canonical = b.w.document.querySelector('link[rel="canonical"]');
+  const meta = property => b.w.document.querySelector(`meta[property="${property}"],meta[name="${property}"]`).content;
+  assert.equal(canonical.href, `${base}?lang=en`);
+  assert.equal(meta('og:url'), canonical.href);
+  assert.equal(meta('og:title'), b.w.document.title);
+  assert.equal(meta('twitter:title'), b.w.document.title);
+  assert.equal(meta('og:description'), meta('description'));
+  assert.equal(meta('twitter:description'), meta('description'));
+  assert.equal(meta('og:locale'), 'en_GB');
+  assert.equal(meta('og:locale:alternate'), 'de_DE');
+  assert.equal(b.w.document.querySelector('link[hreflang="de"]').href, base);
+  assert.equal(b.w.document.querySelector('link[hreflang="en"]').href, `${base}?lang=en`);
+  assert.equal(new URL(meta('og:image')).origin, 'https://nachhilfe-nils-schwebel.github.io');
+  b.w.document.querySelector('[data-language="de"]').click();
+  assert.equal(canonical.href, base);
+  assert.equal(meta('og:url'), base);
+  assert.equal(meta('og:locale'), 'de_DE');
+  assert.equal(meta('og:title'), b.w.document.title);
+  assert.equal(meta('og:description'), meta('description'));
+  assert.match(b.w.location.search, /lessonDate=2026-10-06/);
+});
+
+for (const page of [
+  { file: 'imprint.html', english: 'Legal notice', german: 'Impressum' },
+  { file: 'privacy.html', english: 'Privacy', german: 'Datenschutz' },
+]) test(`${page.file} selects one legal language and preserves identity when toggled`, async t => {
+  const b = browser(page.file, '?lang=en'); t.after(() => b.dom.window.close());
+  b.run('site.js'); b.run('legal.js');
+  const document = b.w.document;
+  const canonical = document.querySelector('link[rel="canonical"]');
+  const description = () => document.querySelector('meta[name="description"]').content;
+  const og = key => document.querySelector(`meta[property="og:${key}"]`).content;
+  const assertLanguage = (language, title) => {
+    assert.equal(document.documentElement.lang, language);
+    assert.equal(document.getElementById('legal-title').textContent, title);
+    assert.equal(document.title, `${title} · Nils Schwebel`);
+    const visible = [...document.querySelectorAll('[data-legal-language]')].filter(element => !element.hidden);
+    assert.ok(visible.length > 0);
+    assert.ok(visible.every(element => element.dataset.legalLanguage === language));
+    assert.ok([...document.querySelectorAll(`[data-legal-language="${language === 'en' ? 'de' : 'en'}"]`)].every(element => element.hidden));
+    assert.equal(og('title'), document.title);
+    assert.equal(og('description'), description());
+    assert.equal(og('locale'), language === 'en' ? 'en_GB' : 'de_DE');
+    assert.equal(canonical.href, `https://nachhilfe-nils-schwebel.github.io/${page.file}${language === 'en' ? '?lang=en' : ''}`);
+    assert.equal(og('url'), canonical.href);
+    assert.equal(document.querySelector('.main-nav').getAttribute('aria-label'), language === 'en' ? 'Main navigation' : 'Hauptnavigation');
+    assert.equal(document.querySelector('.footer-links').getAttribute('aria-label'), language === 'en' ? 'Legal information' : 'Rechtliche Informationen');
+    assert.equal(document.querySelector('[data-i18n="nav.pricing"]').textContent, language === 'en' ? 'Pricing' : 'Preise');
+    for (const link of document.querySelectorAll('[data-keep-language]')) {
+      assert.equal(new URL(link.href).searchParams.get('lang'), language);
+    }
+    const address = document.querySelector('address');
+    assert.equal(address.hidden, false);
+    assert.equal(address.closest('[hidden]'), null);
+    assert.match(address.textContent, /Nils Schwebel/);
+    assert.match(address.textContent, /Biedermannstr\. 40/);
+    assert.match(address.textContent, /04277 Leipzig/);
+    assert.equal(address.querySelector('a').href, 'mailto:h5jh6cnng6@privaterelay.appleid.com');
+  };
+  assertLanguage('en', page.english);
+  const englishDescription = description();
+  document.querySelector('[data-language="de"]').click();
+  assert.equal(new URL(b.w.location.href).searchParams.get('lang'), 'de');
+  assertLanguage('de', page.german);
+  assert.notEqual(description(), englishDescription);
+  document.querySelector('[data-language="en"]').click();
+  assertLanguage('en', page.english);
+  assert.equal(description(), englishDescription);
+  assert.equal(b.errors.length, 0);
+});
+
+test('language, selected trial and direct contact work without reading or writing browser storage', async t => {
+  const booking = browser('booking.html', '?lang=en'); t.after(() => booking.dom.window.close());
+  const storageAttempts = [];
+  const blockStorage = w => {
+    for (const name of ['localStorage', 'sessionStorage']) {
+      Object.defineProperty(w, name, {
+        configurable: true,
+        get() { storageAttempts.push(name); throw new w.DOMException('Storage is disabled', 'SecurityError'); }
+      });
+    }
+  };
+  blockStorage(booking.w);
+  booking.w.fetch = async () => reply(fixture());
+  booking.run('site.js'); booking.run('availability.js'); booking.run('lesson-selection.js'); booking.run('booking.js');
+  await flush();
+  assert.equal(booking.w.siteLanguage, 'en');
+  booking.w.document.querySelector('[data-slot="2026-10-06_15:30"]').click();
+  assert.equal(booking.w.document.getElementById('booking-continue').disabled, false);
+  const destination = booking.w.LessonSelection.contactUrl({ date: '2026-10-06', time: '15:30', format: 'online' });
+  const navigation = new URL(destination, booking.w.location.href);
+  assert.equal(navigation.searchParams.get('lang'), 'en');
+  assert.equal(navigation.searchParams.get('lessonTime'), '15:30');
+
+  const contact = browser('contact.html', navigation.search); t.after(() => contact.dom.window.close());
+  blockStorage(contact.w);
+  let payload; let posts = 0;
+  contact.w.fetch = async (url, options) => {
+    if (url === 'availability.json') return reply(fixture());
+    posts += 1; payload = JSON.parse(options.body); return reply({ success: true });
+  };
+  contact.run('site.js'); contact.run('availability.js'); contact.run('lesson-selection.js'); contact.run('contact.js');
+  await flush();
+  assert.equal(contact.w.document.getElementById('selected-lesson').hidden, false);
+  assert.equal(contact.w.document.getElementById('contact-send').textContent, 'Send enquiry');
+  fillContact(contact.w);
+  contact.w.document.querySelector('[data-language="de"]').click();
+  assert.equal(contact.w.LessonSelection.read().time, '15:30');
+  assert.equal(contact.w.document.getElementById('client-message').value, 'Mathe, Klasse 8');
+  assert.equal(contact.w.document.getElementById('contact-send').textContent, 'Anfrage senden');
+  submit(contact.w); await flush();
+  assert.equal(posts, 1); assert.equal(payload.lesson_time, '15:30'); assert.equal(payload.language, 'de');
+  contact.w.document.getElementById('clear-lesson').click();
+  assert.equal(contact.w.LessonSelection.read(), null);
+  assert.equal(contact.w.document.getElementById('contact-send').textContent, 'Nachricht senden');
+  assert.equal(new URL(contact.w.location.href).searchParams.has('lessonDate'), false);
+  assert.equal(new URL(contact.w.location.href).searchParams.get('lang'), 'de');
+  assert.deepEqual(storageAttempts, []);
+  assert.equal(booking.errors.length, 0); assert.equal(contact.errors.length, 0);
 });

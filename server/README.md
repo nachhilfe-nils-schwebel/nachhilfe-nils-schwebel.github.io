@@ -15,7 +15,7 @@ For an event from **15:30 to 15:45**, the blocked interval becomes **15:00–16:
 
 The default poll is every **60 seconds**. Changed slots are published after a successful read. When nothing changes, the timestamp is renewed **once an hour**, avoiding a commit every minute. A snapshot expires after **two hours**; if the updater stops, the booking page stops offering stale times while direct contact remains available. GitHub Pages still has to deploy a pushed update, so changes are not instantaneous on the public site.
 
-Branch-based GitHub Pages has a [soft limit of ten builds per hour](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits). Routine polling produces no build when the slots are unchanged. If calendar edits regularly exceed that rate, use a custom Pages Actions workflow, to which that build limit does not apply.
+The website deploys through its custom Pages Actions workflow after changes reach `main`. The [branch-based ten-build-per-hour soft limit](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits) does not apply to this workflow. Routine polling produces no commit or deployment when the slots are unchanged.
 
 Private event titles, descriptions, attendees and calendar identifiers are never included in the public file. Calendar access failures preserve the last verified snapshot without renewing its timestamp. Git push failures retry on the next poll. Source changes, recurring events, time-zone changes and overlapping events are accounted for on every successful read.
 
@@ -23,7 +23,7 @@ Private event titles, descriptions, attendees and calendar identifiers are never
 
 Requires macOS 13 or later, **Python 3.10+**, Git, and Apple's Xcode Command Line Tools. Building the native helper works on both Apple Silicon and Intel. Python uses its standard library; no Python packages are required. Node is only needed for website development tests.
 
-1. Merge the website draft into `main`, then enable GitHub Pages from `main` and `/ (root)`. The updater refuses to publish to a branch that does not contain the website yet.
+1. Use the production website from `main`, with GitHub Pages set to **GitHub Actions**. The updater refuses to publish to a branch that does not contain the website yet.
 2. Clone the repository into a local folder on the other Mac. Use a separate clone for this updater and run it on **one Mac only**. For example:
 
    ```sh

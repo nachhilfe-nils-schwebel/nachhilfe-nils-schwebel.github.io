@@ -91,6 +91,16 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .price-table tbody th { font-weight: 400; }
 
 .site-footer { display: flex; justify-content: space-between; gap: 24px; font-size: var(--small); color: var(--muted); padding-top: 24px; padding-bottom: 32px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.footer-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.legal-main { max-width: 800px; padding-top: 34px; padding-bottom: 80px; }
+.legal-back { display: inline-block; margin-bottom: 40px; color: var(--muted); font-size: var(--small); }
+.legal-main h1 { margin-bottom: 24px; }
+.legal-main h2 { font-family: var(--sans); font-size: 18px; font-weight: 600; margin-top: 32px; margin-bottom: 12px; }
+.legal-main p + p { margin-top: 16px; }
+.legal-main address { font-style: normal; line-height: 1.8; margin-bottom: 24px; }
+.legal-main a:not(.legal-back) { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.legal-language[hidden] { display: none; }
 .noscript-note { max-width: 750px; margin: 0 auto 32px; font-size: var(--small); padding: 0 24px; }
 
 @media (max-width: 900px) {
