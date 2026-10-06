@@ -12,7 +12,7 @@ Run `python3 -m http.server 4173 --bind 127.0.0.1` from this folder, then open `
 - In person: €25 for 60 minutes, €32 for 90 minutes.
 - Online: €22 for 60 minutes, €28 for 90 minutes.
 - The first trial lesson is free and lasts 45 minutes.
-- The introduction uses Nils’s supplied background: age 21, mathematics student, tutoring since 2022, work at Sprachschule Nachhilfe Firstclass and Schülerhilfe, and experience with many private pupils.
+- The introduction uses Nils’s supplied background: age 21, mathematics student, tutoring since 2022, small-group teaching at Sprachschule Nachhilfe Firstclass and Schülerhilfe, and private one-to-one tutoring for several years.
 - `assets/avatar1.png` and `assets/avatar2.jpeg` are the supplied originals. The homepage uses compressed copies, `assets/portrait.jpg` and `assets/about.jpg`.
 
 ## Booking and contact
