@@ -62,12 +62,13 @@
       'summary.duration.label': 'Dauer', 'summary.duration': '30 Minuten (Beispiel)',
       'summary.price.label': 'Preis', 'summary.price': 'Kostenlos', 'summary.format.label': 'Format',
       'summary.selection': 'Deine Auswahl',
+      continue: 'Weiter zum Kontakt', expired: 'Diese Uhrzeit ist inzwischen vergangen. Bitte wähle einen neuen Termin.',
       previousWeek: 'Vorherige Woche', nextWeek: 'Nächste Woche', daysGroup: 'Tag auswählen',
       timesGroup: 'Uhrzeit auswählen', noSelection: 'Wähle einen Tag und eine Uhrzeit.',
       noSlots: 'In dieser Woche gibt es keine weiteren Beispielzeiten. Schau in die nächste Woche.',
       unavailable: 'Keine Beispielzeiten', available: 'Beispielzeiten zur Auswahl',
       titleTag: 'Kostenlose Probestunde · Nils Schwebel',
-      description: 'Lerne Nils in einer kostenlosen Probestunde kennen. Entwurf mit Beispielterminen für Nachhilfe in Leipzig und online.',
+      description: 'Kostenlose Probestunde für Nachhilfe in Mathe und Physik, in Leipzig oder online. Entwurf mit Beispielterminen.',
     },
     en: {
       skip: 'Skip to content', back: 'Back to the homepage',
@@ -80,12 +81,13 @@
       'summary.duration.label': 'Duration', 'summary.duration': '30 minutes (example)',
       'summary.price.label': 'Price', 'summary.price': 'Free', 'summary.format.label': 'Format',
       'summary.selection': 'Your selection',
+      continue: 'Continue to contact', expired: 'This time has now passed. Please choose a new time.',
       previousWeek: 'Previous week', nextWeek: 'Next week', daysGroup: 'Choose a day',
       timesGroup: 'Choose a time', noSelection: 'Choose a day and a time.',
       noSlots: 'There are no more sample times this week. Take a look at next week.',
       unavailable: 'No sample times', available: 'sample times to choose from',
       titleTag: 'Free trial lesson · Nils Schwebel',
-      description: 'Meet Nils in a free trial lesson. Draft with sample times for private tutoring in Leipzig and online.',
+      description: 'Free trial lesson for maths and physics tutoring, in Leipzig or online. Draft with sample times.',
     },
   };
 
@@ -93,12 +95,13 @@
   const mondayOffset = (civilDate(clock.date).getUTCDay() + 6) % 7;
   const startDate = addDays(clock.date, -mondayOffset);
   const allDates = Array.from({ length: WEEK_COUNT * 7 }, (_, index) => addDays(startDate, index));
-  const slots = sampleAvailabilityProvider.getSlots(allDates);
+  let slots = sampleAvailabilityProvider.getSlots(allDates);
   let language = window.siteLanguage === 'en' ? 'en' : 'de';
   let week = slots.length ? Math.floor(allDates.indexOf(slots[0].date) / 7) : 0;
   let selectedDate = slots[0]?.date || null;
   let selectedSlot = null;
   let format = 'leipzig';
+  let selectionExpired = false;
 
   const get = id => document.getElementById(id);
   const t = key => copy[language][key] || key;
@@ -176,6 +179,9 @@
     get('selection-label').textContent = selectedSlot
       ? `${formattedDate(selectedSlot.date, { weekday: 'short', day: 'numeric', month: 'long' })} · ${displayTime(selectedSlot.time)}`
       : t('noSelection');
+    get('booking-continue').disabled = !selectedSlot || !['leipzig', 'online'].includes(format);
+    get('booking-error').hidden = !selectionExpired;
+    get('booking-error').textContent = selectionExpired ? t('expired') : '';
   }
 
   function render() {
@@ -185,11 +191,25 @@
     renderSummary();
   }
 
+  function refreshAvailability() {
+    slots = sampleAvailabilityProvider.getSlots(allDates);
+    if (selectedSlot && !slots.some(slot => slot.id === selectedSlot.id)) {
+      selectedSlot = null;
+      selectionExpired = true;
+    }
+    if (!selectedDate || !dateSlots(selectedDate).length) {
+      const keys = allDates.slice(week * 7, week * 7 + 7);
+      selectedDate = keys.find(key => dateSlots(key).length) || null;
+    }
+    render();
+  }
+
   function changeWeek(amount) {
     week = Math.max(0, Math.min(WEEK_COUNT - 1, week + amount));
     const keys = allDates.slice(week * 7, week * 7 + 7);
     selectedDate = keys.find(key => dateSlots(key).length) || null;
     selectedSlot = null;
+    selectionExpired = false;
     renderDays();
     renderTimes();
     renderSummary();
@@ -202,6 +222,7 @@
     if (!button || button.disabled) return;
     selectedDate = button.dataset.date;
     selectedSlot = null;
+    selectionExpired = false;
     renderDays();
     renderTimes();
     renderSummary();
@@ -210,15 +231,30 @@
   get('booking-times').addEventListener('click', event => {
     const button = event.target.closest('button[data-slot]');
     if (!button) return;
-    selectedSlot = slots.find(slot => slot.id === button.dataset.slot) || null;
+    const slotId = button.dataset.slot;
+    refreshAvailability();
+    selectedSlot = slots.find(slot => slot.id === slotId) || null;
+    selectionExpired = !selectedSlot;
     renderTimes();
     renderSummary();
-    get('booking-times').querySelector(`[data-slot="${selectedSlot.id}"]`).focus();
+    if (selectedSlot) get('booking-times').querySelector(`[data-slot="${selectedSlot.id}"]`).focus();
   });
   document.querySelectorAll('input[name="lesson-format"]').forEach(input => input.addEventListener('change', () => {
     format = input.value;
     renderSummary();
   }));
+  get('booking-continue').addEventListener('click', () => {
+    refreshAvailability();
+    if (!selectedSlot) return;
+    const destination = window.LessonSelection.contactUrl({ ...selectedSlot, format });
+    if (destination) window.location.assign(destination);
+    else {
+      selectedSlot = null;
+      selectionExpired = true;
+      renderTimes();
+      renderSummary();
+    }
+  });
   // Native buttons already support Tab, Enter and Space. Arrow keys additionally
   // make the seven-day and time groups quick to browse without trapping focus.
   ['booking-days', 'booking-times'].forEach(id => get(id).addEventListener('keydown', event => {
@@ -233,6 +269,10 @@
   document.addEventListener('languagechange', event => {
     language = event.detail.language === 'en' ? 'en' : 'de';
     render();
+  });
+  window.addEventListener('pageshow', refreshAvailability);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) refreshAvailability();
   });
   render();
 })();

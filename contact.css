@@ -1,0 +1,45 @@
+.contact-main { padding-top: 34px; padding-bottom: 92px; }
+.contact-back { color: var(--muted); font-size: 14px; }
+.contact-back:hover { text-decoration: underline; text-underline-offset: 4px; }
+.contact-content { max-width: 700px; margin: 42px auto 0; }
+.contact-heading h1 { font-size: 26px; }
+.contact-heading p { margin-top: 16px; }
+.contact-lesson { background: #e9ece5; border-radius: 3px; padding: 28px 32px; margin-bottom: 40px; }
+.contact-lesson[hidden], .contact-error[hidden], .contact-status[hidden] { display: none; }
+.contact-lesson h2 { font-size: 26px; }
+.lesson-datetime { margin-top: 16px; }
+.contact-lesson-details { margin: 20px 0 0; border-top: 1px solid #cfd6ca; padding-top: 12px; }
+.contact-lesson-details > div { display: flex; justify-content: space-between; gap: 24px; padding: 5px 0; }
+.contact-lesson-details dt { color: var(--muted); }
+.contact-lesson-details dd { margin: 0; text-align: right; }
+.contact-lesson-note { font-size: 14px; color: var(--muted); margin-top: 16px; }
+.contact-lesson-actions { display: flex; flex-wrap: wrap; gap: 12px 28px; margin-top: 20px; font-size: 14px; }
+.contact-lesson-actions a, .contact-lesson-actions button { text-decoration: underline; text-underline-offset: 4px; }
+.contact-lesson-actions button { font: inherit; line-height: inherit; border: 0; padding: 0; background: transparent; color: var(--ink); }
+.contact-form { margin-top: 32px; }
+.contact-methods { border: 0; margin: 0; padding: 0; min-width: 0; }
+.contact-methods legend { padding: 0; font-weight: 500; }
+.contact-hint { font-size: 14px; color: var(--muted); margin-top: 8px; }
+.contact-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 20px; }
+.contact-field label { display: block; margin-bottom: 8px; }
+.contact-field input, .contact-field textarea { display: block; width: 100%; border: 1px solid #bdc6c3; border-radius: 3px; background: #fcfbf7; color: var(--ink); font: inherit; padding: 11px 12px; }
+.contact-field input[aria-invalid='true'], .contact-field textarea[aria-invalid='true'] { border-color: #8e443a; }
+.contact-field textarea { min-height: 160px; resize: vertical; }
+.contact-field textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.contact-message { margin-top: 28px; }
+.contact-error { font-size: 14px; color: #8e443a; margin-top: 8px; }
+.contact-delivery-note { font-size: 14px; color: var(--muted); margin-top: 24px; }
+.contact-form .button { margin-top: 20px; }
+.contact-form .button:disabled { background: #d9dedb; border-color: #d9dedb; color: #626c70; }
+.contact-status { margin-top: 20px; padding: 12px 16px; background: #e9ece5; border-radius: 3px; font-size: 14px; }
+.contact-status[data-error='true'] { color: #8e443a; background: #f1e6de; }
+.contact-content > noscript .contact-hint { margin-top: 24px; }
+@media (max-width: 720px) {
+  .contact-main { padding-top: 24px; padding-bottom: 64px; }
+  .contact-content { margin-top: 32px; }
+  .contact-lesson { padding: 24px; margin-bottom: 32px; }
+  .contact-fields { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 400px) {
+  .contact-lesson { padding: 20px 16px; }
+}

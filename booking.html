@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lerne Nils in einer kostenlosen Probestunde kennen. Entwurf mit Beispielterminen für Nachhilfe in Leipzig und online.">
+    <meta name="description" content="Kostenlose Probestunde für Nachhilfe in Mathe und Physik, in Leipzig oder online. Entwurf mit Beispielterminen.">
     <meta name="theme-color" content="#f5f3ed">
     <title>Kostenlose Probestunde · Nils Schwebel</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="booking.css">
     <script src="site.js" defer></script>
+    <script src="lesson-selection.js" defer></script>
     <script src="booking.js" defer></script>
   </head>
   <body class="booking-page">
@@ -19,10 +20,12 @@
     <nav class="main-nav" aria-label="Hauptnavigation">
       <a href="./#about" data-keep-language data-i18n="nav.about">Über mich</a>
       <a href="./#pricing" data-keep-language data-i18n="nav.pricing">Preise</a>
-      <a href="booking.html" data-keep-language data-i18n="nav.trial" aria-current="page">Probestunde</a>
+      <a href="contact.html?direct=1" data-keep-language data-i18n="nav.contact">Kontakt</a>
+      <a class="button nav-trial" href="booking.html" data-keep-language data-i18n="nav.trial" aria-current="page">Probestunde</a>
     </nav>
     <div class="language-switch" role="group" aria-label="Sprache / Language">
       <button type="button" data-language="de" aria-pressed="true">DE</button>
+      <span aria-hidden="true">/</span>
       <button type="button" data-language="en" aria-pressed="false">EN</button>
     </div>
   </header>
@@ -81,6 +84,8 @@
               <div><dt data-booking-i18n="summary.format.label">Format</dt><dd id="summary-format">In Leipzig</dd></div>
             </dl>
             <div class="chosen-slot"><span data-booking-i18n="summary.selection">Deine Auswahl</span><p id="selection-label" aria-live="polite">Wähle einen Tag und eine Uhrzeit.</p></div>
+            <button id="booking-continue" class="button booking-continue" type="button" disabled data-booking-i18n="continue">Weiter zum Kontakt</button>
+            <p id="booking-error" class="booking-error" role="status" hidden></p>
           </section>
         </aside>
       </div>

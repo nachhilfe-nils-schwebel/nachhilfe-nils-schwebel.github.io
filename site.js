@@ -4,40 +4,44 @@
   const copy = {
     de: {
       skip: 'Zum Inhalt',
-      'nav.about': 'Über mich', 'nav.pricing': 'Preise', 'nav.trial': 'Probestunde',
+      'nav.about': 'Über mich', 'nav.pricing': 'Preise', 'nav.contact': 'Kontakt', 'nav.trial': 'Probestunde',
       'hero.title': 'Nachhilfe in Leipzig.',
-      'hero.description': 'Persönliche Nachhilfe für die Klassen 5–12, vor Ort oder online. Ab 25 € pro Stunde.',
-      'price.note': '25 € ist ein Beispielpreis für den Entwurf.',
-      'cta.trial': 'Kostenlose Probestunde',
+      'hero.service': 'Persönliche Nachhilfe in Mathe und Physik',
+      'hero.grades': 'Klassen 5–12', 'hero.format': 'Vor Ort oder online',
+      'hero.rate': 'Ab 25 € pro Stunde', 'hero.rate.note': 'Vor Ort. Online ab 22 € pro Stunde.',
+      'cta.trial': 'Kostenlose Probestunde', 'cta.about': 'Lerne mich kennen', 'cta.contact': 'Direkt Kontakt aufnehmen',
       'portrait.alt': 'Nils Schwebel an seinem Schreibtisch',
       'about.alt': 'Nils Schwebel draußen im Abendlicht',
-      'about.title': 'Über mich',
-      'about.body': 'Ich bin Nils Schwebel und biete private Nachhilfe für Schülerinnen und Schüler der Klassen 5 bis 12. Wir schauen gemeinsam, wo du Unterstützung brauchst, und arbeiten in deinem Tempo.',
+      'about.title': 'Hi, ich bin Nils.',
+      'about.body': 'Ich biete private Nachhilfe in Mathe und Physik für Schülerinnen und Schüler der Klassen 5 bis 12. Wir schauen gemeinsam, wo du Unterstützung brauchst, und arbeiten in deinem Tempo.',
       'about.format': 'Wir können uns in Leipzig treffen oder online lernen. In der kostenlosen Probestunde besprechen wir deine Fragen und Ziele und lernen uns kennen.',
       'pricing.title': 'Preise',
-      'pricing.description': 'Die Probestunde ist kostenlos. Den Preis für weitere Stunden besprechen wir vorab gemeinsam.',
-      'pricing.trial': 'Probestunde', 'pricing.free': 'Kostenlos',
-      'pricing.lessons': 'Einzelunterricht', 'pricing.rate': 'Ab 25 € / Stunde',
-      'pricing.note': 'Der angegebene Preis ist vorläufig. Preis und Stundendauer legen wir noch fest.',
+      'pricing.description': 'Einzelunterricht in Mathe und Physik. Die erste Probestunde ist kostenlos.',
+      'pricing.inperson': 'Vor Ort', 'pricing.online': 'Online',
+      'pricing.60': '60 Minuten', 'pricing.90': '90 Minuten',
+      'pricing.inperson.60': '25 €', 'pricing.inperson.90': '32 €',
+      'pricing.online.60': '22 €', 'pricing.online.90': '28 €',
       'footer.draft': 'Website-Entwurf', 'booking.home': 'Zur Startseite'
     },
     en: {
       skip: 'Skip to content',
-      'nav.about': 'About me', 'nav.pricing': 'Pricing', 'nav.trial': 'Free trial',
+      'nav.about': 'About me', 'nav.pricing': 'Pricing', 'nav.contact': 'Contact', 'nav.trial': 'Free trial',
       'hero.title': 'Private tutoring in Leipzig.',
-      'hero.description': 'Personal tutoring for pupils in grades 5–12, in person or online. From €25 per hour.',
-      'price.note': '€25 is an example price for this draft.',
-      'cta.trial': 'Book a free trial',
+      'hero.service': 'Personal tutoring in maths and physics',
+      'hero.grades': 'Grades 5–12', 'hero.format': 'In person or online',
+      'hero.rate': 'From €25 per hour', 'hero.rate.note': 'In person. Online from €22 per hour.',
+      'cta.trial': 'Book a free trial', 'cta.about': 'Get to know me', 'cta.contact': 'Get in touch directly',
       'portrait.alt': 'Nils Schwebel at his desk',
       'about.alt': 'Nils Schwebel outdoors in the evening light',
-      'about.title': 'About me',
-      'about.body': 'I’m Nils Schwebel, and I offer private tutoring for pupils in grades 5–12. Together, we look at where you need support and work at your pace.',
+      'about.title': 'Hi, I’m Nils.',
+      'about.body': 'I offer private tutoring in maths and physics for pupils in grades 5–12. Together, we look at where you need support and work at your pace.',
       'about.format': 'We can meet in Leipzig or learn online. In the free trial lesson, we’ll discuss your questions and goals and get to know each other.',
       'pricing.title': 'Pricing',
-      'pricing.description': 'The trial lesson is free. We’ll agree on the price of further lessons beforehand.',
-      'pricing.trial': 'Trial lesson', 'pricing.free': 'Free',
-      'pricing.lessons': 'One-to-one tutoring', 'pricing.rate': 'From €25 / hour',
-      'pricing.note': 'The price shown is provisional. The final rate and lesson duration are still to be agreed.',
+      'pricing.description': 'One-to-one tutoring in maths and physics. Your first trial lesson is free.',
+      'pricing.inperson': 'In person', 'pricing.online': 'Online',
+      'pricing.60': '60 minutes', 'pricing.90': '90 minutes',
+      'pricing.inperson.60': '€25', 'pricing.inperson.90': '€32',
+      'pricing.online.60': '€22', 'pricing.online.90': '€28',
       'footer.draft': 'Website draft', 'booking.home': 'Back to home'
     }
   };
@@ -74,8 +78,8 @@
     if (document.getElementById('hero-title')) {
       document.title = language === 'de' ? 'Nachhilfe in Leipzig & online · Nils Schwebel' : 'Private tutoring in Leipzig & online · Nils Schwebel';
       document.querySelector('meta[name="description"]').content = language === 'de'
-        ? 'Persönliche Nachhilfe mit Nils Schwebel für die Klassen 5–12. In Leipzig und online. Starte mit einer kostenlosen Probestunde.'
-        : 'Personal tutoring with Nils Schwebel for pupils in grades 5–12. In Leipzig and online. Start with a free trial lesson.';
+        ? 'Persönliche Nachhilfe in Mathe und Physik mit Nils Schwebel für die Klassen 5–12. In Leipzig ab 25 € und online ab 22 € pro Stunde.'
+        : 'Personal maths and physics tutoring with Nils Schwebel for grades 5–12. In Leipzig from €25 and online from €22 per hour.';
     }
     if (updateUrl) {
       const url = new URL(window.location.href);
