@@ -11,7 +11,7 @@ Run `python3 -m http.server 4173 --bind 127.0.0.1` from this folder, then open `
 - Maths and physics tutoring, grades 5–12, in person or online.
 - In person: €25 for 60 minutes, €32 for 90 minutes.
 - Online: €22 for 60 minutes, €28 for 90 minutes.
-- The first trial lesson is free. Its 30-minute duration is illustrative and still to be finalized.
+- The first trial lesson is free and lasts 45 minutes.
 - The introduction uses Nils’s supplied background: age 21, mathematics student, tutoring since 2022, work at Sprachschule Nachhilfe Firstclass and Schülerhilfe, and experience with many private pupils.
 - `assets/avatar1.png` and `assets/avatar2.jpeg` are the supplied originals. The homepage uses compressed copies, `assets/portrait.jpg` and `assets/about.jpg`.
 
@@ -31,6 +31,7 @@ Submissions use the [Web3Forms endpoint](https://docs.web3forms.com/getting-star
 - `lesson-selection.js`: validates and carries a selected trial to contact; direct contact clears a previous selection.
 - `contact.html`, `contact.css`, `contact.js`: enquiry form, lesson card, validation and Web3Forms submission.
 - `contact-config.js`: public Web3Forms access key.
+- `assets/fonts/`: locally hosted DM Serif Display for main headings and DM Sans for text and controls, with their Open Font Licenses and source information.
 
 ## GitHub Pages
 
@@ -40,4 +41,4 @@ After approving the draft, merge the pull request and select **Settings → Page
 
 ## Before launch
 
-Finalize the biography and trial duration, add the imprint/privacy pages, and replace the sample availability with the planned calendar integration. Calendar credentials and private event details must remain outside the public static repository.
+Finalize the biography, add the imprint/privacy pages, and replace the sample availability with the planned calendar integration. Calendar credentials and private event details must remain outside the public static repository.

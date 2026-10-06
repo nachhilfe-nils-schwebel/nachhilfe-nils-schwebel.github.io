@@ -21,7 +21,7 @@
     const daysAhead = (day.getTime() - new Date(`${now.date}T12:00:00Z`).getTime()) / 86400000;
     const [hour, minute] = value.time.split(':').map(Number);
     if (daysAhead < 0 || daysAhead > 31 || (daysAhead === 0 && hour * 60 + minute <= now.minutes)) return null;
-    return { date: value.date, time: value.time, format: value.format, durationMinutes: 30, isDemo: true };
+    return { date: value.date, time: value.time, format: value.format, durationMinutes: 45, isDemo: true };
   }
 
   function clear() {

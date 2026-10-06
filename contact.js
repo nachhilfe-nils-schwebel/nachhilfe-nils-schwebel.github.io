@@ -12,10 +12,11 @@
       skip: 'Zum Inhalt', back: 'Zurück zur Startseite', title: 'Kontakt',
       intro: 'Schreib mir, in welche Klasse du gehst und wobei du Unterstützung suchst. Du kannst auch ohne Probestunde anfragen.',
       'details.title': 'Wie kann ich dich erreichen?',
-      email: 'E-Mail-Adresse', phone: 'Telefonnummer', message: 'Deine Nachricht', send: 'Nachricht senden',
+      email: 'E-Mail-Adresse', phone: 'Telefonnummer', message: 'Deine Nachricht',
+      'send.message': 'Nachricht senden', 'send.enquiry': 'Anfrage senden',
       'lesson.title': 'Deine Probestunde', 'lesson.format.label': 'Format',
       'lesson.format.leipzig': 'In Leipzig', 'lesson.format.online': 'Online',
-      'lesson.duration.label': 'Dauer', 'lesson.duration': '30 Minuten (Beispiel)',
+      'lesson.duration.label': 'Dauer', 'lesson.duration': '45 Minuten',
       'lesson.price.label': 'Preis', 'lesson.price': 'Kostenlos',
       'lesson.note': 'Beispieltermin, noch keine Buchung. Die Kalenderanbindung folgt.',
       'lesson.change': 'Termin ändern', 'lesson.clear': 'Ohne Termin anfragen',
@@ -39,10 +40,11 @@
       skip: 'Skip to content', back: 'Back to home', title: 'Contact',
       intro: 'Tell me which grade you’re in and where you need support. You can also get in touch without a trial lesson.',
       'details.title': 'How can I reach you?',
-      email: 'Email address', phone: 'Phone number', message: 'Your message', send: 'Send message',
+      email: 'Email address', phone: 'Phone number', message: 'Your message',
+      'send.message': 'Send message', 'send.enquiry': 'Send enquiry',
       'lesson.title': 'Your trial lesson', 'lesson.format.label': 'Format',
       'lesson.format.leipzig': 'In Leipzig', 'lesson.format.online': 'Online',
-      'lesson.duration.label': 'Duration', 'lesson.duration': '30 minutes (example)',
+      'lesson.duration.label': 'Duration', 'lesson.duration': '45 minutes',
       'lesson.price.label': 'Price', 'lesson.price': 'Free',
       'lesson.note': 'Sample time, no booking yet. Calendar integration will follow.',
       'lesson.change': 'Change time', 'lesson.clear': 'Contact without a lesson',
@@ -121,6 +123,7 @@
   }
 
   function updateSendButton() {
+    send.textContent = translate(lesson ? 'send.enquiry' : 'send.message');
     send.disabled = sending || submittedFingerprint === requestFingerprint();
     [email, phone, message, document.getElementById('clear-lesson')].forEach(input => {
       input.disabled = sending;

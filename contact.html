@@ -7,6 +7,8 @@
     <meta name="theme-color" content="#f5f3ed">
     <title>Kontakt · Nils Schwebel</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/dm-serif-display-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="contact.css">
     <script src="site.js" defer></script>
@@ -39,7 +41,7 @@
           <p id="lesson-datetime" class="lesson-datetime"></p>
           <dl class="contact-lesson-details">
             <div><dt data-contact-i18n="lesson.format.label">Format</dt><dd id="lesson-format"></dd></div>
-            <div><dt data-contact-i18n="lesson.duration.label">Dauer</dt><dd data-contact-i18n="lesson.duration">30 Minuten (Beispiel)</dd></div>
+            <div><dt data-contact-i18n="lesson.duration.label">Dauer</dt><dd data-contact-i18n="lesson.duration">45 Minuten</dd></div>
             <div><dt data-contact-i18n="lesson.price.label">Preis</dt><dd data-contact-i18n="lesson.price">Kostenlos</dd></div>
           </dl>
           <p class="contact-lesson-note" data-contact-i18n="lesson.note">Beispieltermin, noch keine Buchung. Die Kalenderanbindung folgt.</p>
@@ -76,7 +78,7 @@
             <p id="message-error" class="contact-error" aria-live="polite" hidden></p>
           </div>
           <p id="delivery-note" class="contact-delivery-note" data-contact-i18n="delivery.unconfigured">Entwurf: Der Nachrichtenversand ist noch nicht eingerichtet. Es werden noch keine Nachrichten verschickt.</p>
-          <button id="contact-send" class="button" type="submit" disabled data-contact-i18n="send">Nachricht senden</button>
+          <button id="contact-send" class="button" type="submit" disabled>Nachricht senden</button>
           <p id="contact-status" class="contact-status" role="status" tabindex="-1" hidden></p>
         </form>
         <noscript><p class="contact-hint">Bitte aktiviere JavaScript, um das Kontaktformular zu verwenden. / Enable JavaScript to use the contact form.</p></noscript>

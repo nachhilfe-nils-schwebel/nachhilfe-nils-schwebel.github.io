@@ -30,7 +30,7 @@
   const sampleAvailabilityProvider = Object.freeze({
     isDemo: true,
     timeZone: TIME_ZONE,
-    durationMinutes: 30,
+    durationMinutes: 45,
     getSlots(keys, now = new Date()) {
       const clock = berlinClock(now);
       const weeklyTimes = Object.freeze({
@@ -59,7 +59,7 @@
       'format.leipzig': 'In Leipzig', 'format.online': 'Online',
       'date.title': 'Tag', 'time.title': 'Uhrzeit', timezone: 'Alle Zeiten: Leipzig (Europe/Berlin)',
       'summary.title': 'Dein Termin',
-      'summary.duration.label': 'Dauer', 'summary.duration': '30 Minuten (Beispiel)',
+      'summary.duration.label': 'Dauer', 'summary.duration': '45 Minuten',
       'summary.price.label': 'Preis', 'summary.price': 'Kostenlos', 'summary.format.label': 'Format',
       'summary.selection': 'Deine Auswahl',
       continue: 'Weiter zum Kontakt', expired: 'Diese Uhrzeit ist inzwischen vergangen. Bitte wähle einen neuen Termin.',
@@ -78,7 +78,7 @@
       'format.leipzig': 'In Leipzig', 'format.online': 'Online',
       'date.title': 'Day', 'time.title': 'Time', timezone: 'All times: Leipzig (Europe/Berlin)',
       'summary.title': 'Your lesson',
-      'summary.duration.label': 'Duration', 'summary.duration': '30 minutes (example)',
+      'summary.duration.label': 'Duration', 'summary.duration': '45 minutes',
       'summary.price.label': 'Price', 'summary.price': 'Free', 'summary.format.label': 'Format',
       'summary.selection': 'Your selection',
       continue: 'Continue to contact', expired: 'This time has now passed. Please choose a new time.',
