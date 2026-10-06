@@ -17,17 +17,22 @@ Run `python3 -m http.server 4173 --bind 127.0.0.1` from this folder, then open `
 
 ## Booking and contact
 
-The booking page shows sample availability for four weeks, in Leipzig local time. Format, day and time selections enable **Continue to contact**. The selected lesson appears at the top of the contact page and accompanies the enquiry. Calendar integration is still pending, so these are sample times and sending an enquiry does not reserve a lesson.
+The booking page reads `availability.json`, the public result of a local iCloud Calendar updater. It shows free 45-minute trials within Monday–Saturday, 15:30–19:00 in Leipzig local time, accounting for 30-minute buffers before and after events. Calendar integration is implemented but must be activated on the other Mac; until then, the public file is empty and marked `unconfigured`.
+
+Format, day and time selections enable **Continue to contact**. The selected lesson appears at the top of the contact page and accompanies the enquiry. Availability is rechecked before continuing and before submitting. An enquiry does not reserve a lesson: Nils confirms it personally and adds confirmed lessons to Calendar. Setup, polling, publishing and configuration are described in [server/README.md](server/README.md).
 
 The contact page also accepts direct enquiries. Email or phone is required, together with a nonempty message. The form uses Web3Forms, configured in `contact-config.js` with the supplied access key. These keys are designed for public browser forms ([Web3Forms FAQ](https://docs.web3forms.com/getting-started/faq)).
 
-Submissions use the [Web3Forms endpoint](https://docs.web3forms.com/getting-started/api-reference) and display success only after a successful HTTP response and `success: true`. Failed or unconfirmed requests retain the entered details. A hidden honeypot is included. No enquiry is sent automatically and no contact details are saved in browser storage. Only the selected sample lesson is temporarily kept in the URL and session storage.
+Submissions use the [Web3Forms endpoint](https://docs.web3forms.com/getting-started/api-reference) and display success only after a successful HTTP response and `success: true`. Failed or unconfirmed requests retain the entered details. A hidden honeypot is included. No enquiry is sent automatically and no contact details are saved in browser storage. Only the selected lesson is temporarily kept in the URL and session storage.
 
 ## Files
 
 - `index.html`: homepage, both portraits, introduction and pricing.
 - `styles.css`, `site.js`: shared responsive layout, translations and language navigation.
-- `booking.html`, `booking.css`, `booking.js`: trial selection with an isolated sample availability provider for future calendar integration.
+- `booking.html`, `booking.css`, `booking.js`: trial selection from published availability, with loading/error states and direct contact.
+- `availability.json`: the only public file changed by the Calendar updater; contains available dates/times, never event details.
+- `availability.js`: shared schema validation, freshness checks and periodic fetching for booking and contact.
+- `server/`: native read-only Calendar helper, scheduling algorithm and background Git publisher, with setup instructions.
 - `lesson-selection.js`: validates and carries a selected trial to contact; direct contact clears a previous selection.
 - `contact.html`, `contact.css`, `contact.js`: enquiry form, lesson card, validation and Web3Forms submission.
 - `contact-config.js`: public Web3Forms access key.
@@ -41,4 +46,8 @@ After approving the draft, merge the pull request and select **Settings → Page
 
 ## Before launch
 
-Finalize the biography, add the imprint/privacy pages, and replace the sample availability with the planned calendar integration. Calendar credentials and private event details must remain outside the public static repository.
+Add the imprint/privacy pages and activate the Calendar updater on the other Mac. Calendar identifiers, private event details, local build files and credentials remain outside the public static repository.
+
+## Tests
+
+Run `python3 -m unittest discover -s tests -p 'test_*.py'` for scheduling, Calendar bridge and isolated Git publishing checks. Run `npm ci` then `npm test` for browser logic tests (requires the Node version specified in `package.json`). The live website has no npm dependency or build step. Tests simulate form responses and do not send enquiries.

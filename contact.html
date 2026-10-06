@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="contact.css">
     <script src="site.js" defer></script>
+    <script src="availability.js" defer></script>
     <script src="lesson-selection.js" defer></script>
     <script src="contact-config.js" defer></script>
     <script src="contact.js" defer></script>
@@ -44,12 +45,21 @@
             <div><dt data-contact-i18n="lesson.duration.label">Dauer</dt><dd data-contact-i18n="lesson.duration">45 Minuten</dd></div>
             <div><dt data-contact-i18n="lesson.price.label">Preis</dt><dd data-contact-i18n="lesson.price">Kostenlos</dd></div>
           </dl>
-          <p class="contact-lesson-note" data-contact-i18n="lesson.note">Beispieltermin, noch keine Buchung. Die Kalenderanbindung folgt.</p>
+          <p class="contact-lesson-note" data-contact-i18n="lesson.note">Ich bestätige den Termin persönlich. Deine Anfrage reserviert noch keinen Termin.</p>
           <div class="contact-lesson-actions">
             <a href="booking.html" data-keep-language data-contact-i18n="lesson.change">Termin ändern</a>
             <button id="clear-lesson" type="button" data-contact-i18n="lesson.clear">Ohne Termin anfragen</button>
           </div>
         </section>
+
+        <div id="lesson-availability-notice" class="contact-lesson" hidden>
+          <p id="lesson-availability-status" role="status"></p>
+          <div class="contact-lesson-actions">
+            <button id="lesson-availability-retry" type="button" data-contact-i18n="lesson.retry">Erneut prüfen</button>
+            <a href="booking.html" data-keep-language data-contact-i18n="lesson.change">Termin ändern</a>
+            <button id="lesson-without-time" type="button" data-contact-i18n="lesson.clear">Ohne Termin anfragen</button>
+          </div>
+        </div>
 
         <section class="contact-heading" aria-labelledby="contact-title">
           <h1 id="contact-title" data-contact-i18n="title">Kontakt</h1>

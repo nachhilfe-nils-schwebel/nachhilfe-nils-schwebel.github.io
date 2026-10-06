@@ -18,7 +18,7 @@
       'lesson.format.leipzig': 'In Leipzig', 'lesson.format.online': 'Online',
       'lesson.duration.label': 'Dauer', 'lesson.duration': '45 Minuten',
       'lesson.price.label': 'Preis', 'lesson.price': 'Kostenlos',
-      'lesson.note': 'Beispieltermin, noch keine Buchung. Die Kalenderanbindung folgt.',
+      'lesson.note': 'Ich bestätige den Termin persönlich. Deine Anfrage reserviert noch keinen Termin.',
       'lesson.change': 'Termin ändern', 'lesson.clear': 'Ohne Termin anfragen',
       'delivery.unconfigured': 'Entwurf: Der Nachrichtenversand ist noch nicht eingerichtet. Es werden noch keine Nachrichten verschickt.',
       'delivery.configured': 'Deine Anfrage wird über das Kontaktformular übermittelt.',
@@ -32,7 +32,10 @@
       'status.submittedLesson': 'Deine Anfrage wurde übermittelt. Ich gebe dir sehr bald Bescheid, ob der Termin klappt.',
       'status.failed': 'Deine Anfrage konnte nicht übermittelt werden. Deine Angaben bleiben im Formular erhalten. Bitte versuche es erneut.',
       'status.uncertain': 'Die Übermittlung konnte nicht bestätigt werden. Deine Angaben bleiben im Formular. Bitte warte kurz, bevor du es erneut versuchst, damit keine doppelte Anfrage entsteht.',
-      'status.expired': 'Der gewählte Beispieltermin ist nicht mehr gültig. Wähle einen neuen Termin oder sende deine Anfrage ohne Probestunde.',
+      'status.expired': 'Der gewählte Termin ist nicht mehr verfügbar. Wähle einen neuen Termin oder schreibe mir ohne Probestunde.',
+      'lesson.checking': 'Die Verfügbarkeit deines Termins wird geprüft …',
+      'lesson.unavailable': 'Die Verfügbarkeit deines Termins konnte nicht bestätigt werden. Lade die Termine erneut, wähle einen anderen Termin oder schreibe mir ohne Probestunde.',
+      'lesson.retry': 'Erneut prüfen',
       subject: 'Anfrage zur Nachhilfe',
       'meta.description': 'Frag Nils Schwebel nach Nachhilfe in Mathematik und Physik für die Klassen 5–12, in Leipzig oder online.'
     },
@@ -46,7 +49,7 @@
       'lesson.format.leipzig': 'In Leipzig', 'lesson.format.online': 'Online',
       'lesson.duration.label': 'Duration', 'lesson.duration': '45 minutes',
       'lesson.price.label': 'Price', 'lesson.price': 'Free',
-      'lesson.note': 'Sample time, no booking yet. Calendar integration will follow.',
+      'lesson.note': 'I’ll confirm the time personally. Your enquiry does not reserve a time yet.',
       'lesson.change': 'Change time', 'lesson.clear': 'Contact without a lesson',
       'delivery.unconfigured': 'Draft: Message delivery is not configured yet. No messages will be sent.',
       'delivery.configured': 'Your enquiry will be submitted through the contact form.',
@@ -60,7 +63,10 @@
       'status.submittedLesson': 'Your enquiry was submitted. I’ll let you know very soon whether the time works.',
       'status.failed': 'Your enquiry could not be submitted. Your details remain in the form. Please try again.',
       'status.uncertain': 'Submission could not be confirmed. Your details remain in the form. Please wait a little before trying again to avoid a duplicate enquiry.',
-      'status.expired': 'The selected sample time is no longer valid. Choose a new time or send your enquiry without a trial lesson.',
+      'status.expired': 'The selected time is no longer available. Choose a new time or contact me without a trial lesson.',
+      'lesson.checking': 'Checking availability for your selected time …',
+      'lesson.unavailable': 'Availability for your selected time could not be confirmed. Try again, choose another time or contact me without a trial lesson.',
+      'lesson.retry': 'Check again',
       subject: 'Tutoring enquiry',
       'meta.description': 'Contact Nils Schwebel about maths and physics tutoring for pupils in grades 5–12, in Leipzig or online.'
     }
@@ -75,7 +81,10 @@
   const status = document.getElementById('contact-status');
   const send = document.getElementById('contact-send');
   const lessonCard = document.getElementById('selected-lesson');
-  let lesson = window.LessonSelection?.read() || null;
+  let requestedLesson = window.LessonSelection?.read() || null;
+  let lesson = requestedLesson;
+  let lessonValidated = false;
+  let verifying = false;
   let validationShown = false;
   let statusKey = null;
   let sending = false;
@@ -107,15 +116,20 @@
   }
 
   function refreshLesson() {
-    const previous = lesson;
-    lesson = window.LessonSelection?.read() || null;
+    if (sending) return !!lesson;
+    const state = window.Availability.getState();
+    const valid = requestedLesson && window.LessonSelection.validate(requestedLesson);
+    lessonValidated = !!valid && window.Availability.contains(valid);
+    lesson = lessonValidated ? valid : state.status === 'loading' ? valid : null;
+    const notice = document.getElementById('lesson-availability-notice');
+    notice.hidden = !requestedLesson || state.status === 'loading' || lessonValidated;
+    document.getElementById('lesson-availability-status').textContent = translate(state.status === 'ready' ? 'status.expired' : 'lesson.unavailable');
+    document.getElementById('lesson-availability-retry').disabled = verifying;
     renderLesson();
+    if (lesson && !lessonValidated) document.querySelector('[data-contact-i18n="lesson.note"]').textContent = translate('lesson.checking');
+    else if (lesson) document.querySelector('[data-contact-i18n="lesson.note"]').textContent = translate('lesson.note');
     updateSendButton();
-    if (previous && !lesson) {
-      showStatus('status.expired', true);
-      return false;
-    }
-    return true;
+    return !requestedLesson || lessonValidated;
   }
 
   function requestFingerprint() {
@@ -124,9 +138,9 @@
 
   function updateSendButton() {
     send.textContent = translate(lesson ? 'send.enquiry' : 'send.message');
-    send.disabled = sending || submittedFingerprint === requestFingerprint();
-    [email, phone, message, document.getElementById('clear-lesson')].forEach(input => {
-      input.disabled = sending;
+    send.disabled = sending || verifying || !!(requestedLesson && !lessonValidated) || submittedFingerprint === requestFingerprint();
+    [email, phone, message, document.getElementById('clear-lesson'), document.getElementById('lesson-without-time')].forEach(input => {
+      input.disabled = sending || verifying;
     });
   }
 
@@ -175,17 +189,30 @@
     document.getElementById('delivery-note').textContent = translate(`delivery.${accessKey() ? 'configured' : 'unconfigured'}`);
     document.getElementById('delivery-note').hidden = !!accessKey();
     if (statusKey) status.textContent = translate(statusKey);
-    renderLesson();
+    refreshLesson();
     updateValidation();
     updateSendButton();
   }
 
-  document.getElementById('clear-lesson').addEventListener('click', () => {
+  function clearLesson() {
+    if (sending || verifying) return;
     window.LessonSelection?.clear();
+    requestedLesson = null;
     lesson = null;
-    renderLesson();
+    lessonValidated = false;
+    refreshLesson();
     updateSendButton();
     email.focus();
+  }
+  document.getElementById('clear-lesson').addEventListener('click', clearLesson);
+  document.getElementById('lesson-without-time').addEventListener('click', clearLesson);
+  document.getElementById('lesson-availability-retry').addEventListener('click', async () => {
+    if (sending || verifying) return;
+    verifying = true;
+    refreshLesson();
+    await window.Availability.refresh();
+    verifying = false;
+    refreshLesson();
   });
   [email, phone, message].forEach(input => input.addEventListener('input', () => {
     updateValidation();
@@ -200,11 +227,7 @@
   form.noValidate = true;
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    if (sending) return;
-    if (!refreshLesson()) {
-      status.focus();
-      return;
-    }
+    if (sending || verifying) return;
     validationShown = true;
     updateValidation(true);
     if (!form.reportValidity()) return;
@@ -214,6 +237,19 @@
       showStatus('status.unconfigured');
       status.focus();
       return;
+    }
+    // Requests with a lesson must use the newest published calendar snapshot.
+    // Direct enquiries never depend on calendar availability.
+    if (requestedLesson) {
+      verifying = true;
+      updateSendButton();
+      await window.Availability.refresh();
+      verifying = false;
+      if (!refreshLesson()) {
+        showStatus(window.Availability.getState().status === 'ready' ? 'status.expired' : 'lesson.unavailable', true);
+        status.focus();
+        return;
+      }
     }
     const fingerprint = requestFingerprint();
     if (submittedFingerprint === fingerprint) {
@@ -269,15 +305,12 @@
     } finally {
       window.clearTimeout(timeout);
       sending = false;
-      updateSendButton();
+      refreshLesson();
       status.focus();
     }
   });
 
   document.addEventListener('languagechange', render);
-  window.addEventListener('pageshow', refreshLesson);
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && !sending) refreshLesson();
-  });
+  document.addEventListener('availabilitychange', refreshLesson);
   render();
 })();

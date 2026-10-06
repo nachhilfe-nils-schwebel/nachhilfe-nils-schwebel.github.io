@@ -43,7 +43,7 @@
   margin: 0 0 12px;
 }
 
-.booking-demo-note {
+.booking-calendar-note {
   color: var(--muted, #626c70);
   font-size: 14px;
   line-height: 1.6;
@@ -359,3 +359,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+#availability-status { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+.availability-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; font-size: 14px; }
+.availability-actions button { border: 1px solid var(--line); border-radius: 3px; background: transparent; color: var(--ink); padding: 7px 12px; cursor: pointer; }
+.availability-actions button:disabled { opacity: .5; cursor: default; }

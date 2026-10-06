@@ -1,8 +1,7 @@
 (() => {
   'use strict';
 
-  const TIME_ZONE = 'Europe/Berlin';
-  const WEEK_COUNT = 4;
+  const MAX_WEEK_COUNT = 4;
 
   // Civil dates are stored in UTC so day arithmetic stays independent of DST
   // and the visitor's timezone. Displayed lesson times always refer to Leipzig.
@@ -13,48 +12,16 @@
     date.setUTCDate(date.getUTCDate() + count);
     return dateKey(date);
   };
-  const berlinClock = (now = new Date()) => {
-    const parts = new Intl.DateTimeFormat('en-GB', {
-      timeZone: TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit',
-      hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
-    }).formatToParts(now);
-    const value = type => parts.find(part => part.type === type).value;
-    return {
-      date: `${value('year')}-${value('month')}-${value('day')}`,
-      minutes: Number(value('hour')) * 60 + Number(value('minute')),
-    };
-  };
-
-  // Sample data source. Replace this provider with a calendar-backed source
-  // later; rendering and selection below do not generate availability.
-  const sampleAvailabilityProvider = Object.freeze({
-    isDemo: true,
-    timeZone: TIME_ZONE,
-    durationMinutes: 45,
-    getSlots(keys, now = new Date()) {
-      const clock = berlinClock(now);
-      const weeklyTimes = Object.freeze({
-        1: ['15:30', '16:30', '18:00'],
-        2: ['15:00', '16:00', '17:30'],
-        4: ['15:30', '17:00', '18:00'],
-        5: ['14:30', '15:30', '17:00'],
-      });
-      return Object.freeze(keys.flatMap(key => {
-        if (key < clock.date) return [];
-        const times = weeklyTimes[civilDate(key).getUTCDay()] || [];
-        return times.filter(time => {
-          const [hour, minute] = time.split(':').map(Number);
-          return key > clock.date || hour * 60 + minute > clock.minutes;
-        }).map(time => Object.freeze({ id: `${key}_${time}`, date: key, time }));
-      }));
-    },
-  });
-
   const copy = {
     de: {
       skip: 'Zum Inhalt', back: 'Zurück zur Startseite',
       title: 'Kostenlose Probestunde',
-      'demo.text': 'Beispieltermine. Die Kalenderanbindung folgt; es wird noch kein Termin gebucht.',
+      'calendar.note': 'Die Termine werden regelmäßig aktualisiert. Ich bestätige deine Probestunde persönlich.',
+      loading: 'Freie Termine werden geladen …',
+      unconfigured: 'Die Kalenderanbindung wird eingerichtet. Du kannst mir bereits direkt schreiben.',
+      stale: 'Die Terminübersicht wird aktualisiert. Bitte versuche es später erneut oder schreib mir direkt.',
+      error: 'Die freien Termine konnten nicht geladen werden. Bitte versuche es erneut oder schreib mir direkt.',
+      retry: 'Erneut laden', contact: 'Zum Kontaktformular ↗',
       'calendar.title': 'Termin auswählen', 'format.title': 'Unterrichtsformat',
       'format.leipzig': 'In Leipzig', 'format.online': 'Online',
       'date.title': 'Tag', 'time.title': 'Uhrzeit', timezone: 'Alle Zeiten: Leipzig (Europe/Berlin)',
@@ -62,18 +29,23 @@
       'summary.duration.label': 'Dauer', 'summary.duration': '45 Minuten',
       'summary.price.label': 'Preis', 'summary.price': 'Kostenlos', 'summary.format.label': 'Format',
       'summary.selection': 'Deine Auswahl',
-      continue: 'Weiter zum Kontakt', expired: 'Diese Uhrzeit ist inzwischen vergangen. Bitte wähle einen neuen Termin.',
+      continue: 'Weiter zum Kontakt', expired: 'Dieser Termin ist nicht mehr verfügbar. Bitte wähle einen neuen Termin.',
       previousWeek: 'Vorherige Woche', nextWeek: 'Nächste Woche', daysGroup: 'Tag auswählen',
       timesGroup: 'Uhrzeit auswählen', noSelection: 'Wähle einen Tag und eine Uhrzeit.',
-      noSlots: 'In dieser Woche gibt es keine weiteren Beispielzeiten. Schau in die nächste Woche.',
-      unavailable: 'Keine Beispielzeiten', available: 'Beispielzeiten zur Auswahl',
+      noSlots: 'In dieser Woche sind keine Termine frei. Schau in eine andere Woche oder schreib mir direkt.',
+      unavailable: 'Keine freien Termine', available: 'freie Termine',
       titleTag: 'Kostenlose Probestunde · Nils Schwebel',
-      description: 'Kostenlose Probestunde für Nachhilfe in Mathe und Physik, in Leipzig oder online. Entwurf mit Beispielterminen.',
+      description: 'Kostenlose Probestunde für Nachhilfe in Mathe und Physik, in Leipzig oder online.',
     },
     en: {
       skip: 'Skip to content', back: 'Back to the homepage',
       title: 'Free trial lesson',
-      'demo.text': 'Sample times. Calendar integration will follow; no lesson is booked here.',
+      'calendar.note': 'Times are updated regularly. I’ll confirm your trial lesson personally.',
+      loading: 'Loading available times …',
+      unconfigured: 'Calendar integration is being set up. You can already contact me directly.',
+      stale: 'The availability list is being updated. Please try again later or contact me directly.',
+      error: 'Available times could not be loaded. Please try again or contact me directly.',
+      retry: 'Try again', contact: 'Contact me ↗',
       'calendar.title': 'Choose a time', 'format.title': 'Lesson format',
       'format.leipzig': 'In Leipzig', 'format.online': 'Online',
       'date.title': 'Day', 'time.title': 'Time', timezone: 'All times: Leipzig (Europe/Berlin)',
@@ -81,27 +53,27 @@
       'summary.duration.label': 'Duration', 'summary.duration': '45 minutes',
       'summary.price.label': 'Price', 'summary.price': 'Free', 'summary.format.label': 'Format',
       'summary.selection': 'Your selection',
-      continue: 'Continue to contact', expired: 'This time has now passed. Please choose a new time.',
+      continue: 'Continue to contact', expired: 'This time is no longer available. Please choose a new time.',
       previousWeek: 'Previous week', nextWeek: 'Next week', daysGroup: 'Choose a day',
       timesGroup: 'Choose a time', noSelection: 'Choose a day and a time.',
-      noSlots: 'There are no more sample times this week. Take a look at next week.',
-      unavailable: 'No sample times', available: 'sample times to choose from',
+      noSlots: 'There are no available times this week. Try another week or contact me directly.',
+      unavailable: 'No available times', available: 'available times',
       titleTag: 'Free trial lesson · Nils Schwebel',
-      description: 'Free trial lesson for maths and physics tutoring, in Leipzig or online. Draft with sample times.',
+      description: 'Free trial lesson for maths and physics tutoring, in Leipzig or online.',
     },
   };
 
-  const clock = berlinClock();
-  const mondayOffset = (civilDate(clock.date).getUTCDay() + 6) % 7;
-  const startDate = addDays(clock.date, -mondayOffset);
-  const allDates = Array.from({ length: WEEK_COUNT * 7 }, (_, index) => addDays(startDate, index));
-  let slots = sampleAvailabilityProvider.getSlots(allDates);
+  let allDates = [];
+  let slots = [];
   let language = window.siteLanguage === 'en' ? 'en' : 'de';
-  let week = slots.length ? Math.floor(allDates.indexOf(slots[0].date) / 7) : 0;
-  let selectedDate = slots[0]?.date || null;
+  let week = 0;
+  let selectedDate = null;
   let selectedSlot = null;
   let format = 'leipzig';
   let selectionExpired = false;
+  let checking = false;
+  let revision = 0;
+  const weekCount = () => Math.min(MAX_WEEK_COUNT, Math.ceil(allDates.length / 7));
 
   const get = id => document.getElementById(id);
   const t = key => copy[language][key] || key;
@@ -126,11 +98,18 @@
 
   function renderDays() {
     const keys = allDates.slice(week * 7, week * 7 + 7);
+    if (!keys.length) {
+      get('week-label').textContent = '';
+      get('previous-week').disabled = true;
+      get('next-week').disabled = true;
+      get('booking-days').replaceChildren();
+      return;
+    }
     const first = formattedDate(keys[0], { day: 'numeric', month: 'short' });
-    const last = formattedDate(keys[6], { day: 'numeric', month: 'short', year: 'numeric' });
+    const last = formattedDate(keys[keys.length - 1], { day: 'numeric', month: 'short', year: 'numeric' });
     get('week-label').textContent = `${first} – ${last}`;
     get('previous-week').disabled = week === 0;
-    get('next-week').disabled = week === WEEK_COUNT - 1;
+    get('next-week').disabled = week >= weekCount() - 1;
     const buttons = keys.map(key => {
       const available = dateSlots(key);
       const button = document.createElement('button');
@@ -159,7 +138,8 @@
     if (!available.length) {
       const note = document.createElement('p');
       note.className = 'no-slots';
-      note.textContent = t('noSlots');
+      note.textContent = window.Availability.getState().status === 'ready' ? t('noSlots') : '';
+      note.hidden = !note.textContent;
       get('booking-times').replaceChildren(note);
       return;
     }
@@ -179,24 +159,34 @@
     get('selection-label').textContent = selectedSlot
       ? `${formattedDate(selectedSlot.date, { weekday: 'short', day: 'numeric', month: 'long' })} · ${displayTime(selectedSlot.time)}`
       : t('noSelection');
-    get('booking-continue').disabled = !selectedSlot || !['leipzig', 'online'].includes(format);
+    get('booking-continue').disabled = checking || !selectedSlot || !window.Availability.contains(selectedSlot) || !['leipzig', 'online'].includes(format);
     get('booking-error').hidden = !selectionExpired;
     get('booking-error').textContent = selectionExpired ? t('expired') : '';
   }
 
   function render() {
     applyCopy();
+    const state = window.Availability.getState();
+    get('availability-status').textContent = state.status === 'ready' ? '' : t(state.status);
+    get('availability-status').hidden = state.status === 'ready';
+    get('availability-retry').hidden = state.status === 'ready' || state.status === 'loading';
+    get('availability-retry').disabled = checking;
     renderDays();
     renderTimes();
     renderSummary();
   }
 
   function refreshAvailability() {
-    slots = sampleAvailabilityProvider.getSlots(allDates);
+    const snapshot = window.Availability.getSnapshot();
+    slots = snapshot?.slots || [];
+    allDates = snapshot ? Array.from({ length: Math.min(28, (civilDate(snapshot.windowEnd) - civilDate(snapshot.windowStart)) / 86400000) }, (_, index) => addDays(snapshot.windowStart, index)) : [];
     if (selectedSlot && !slots.some(slot => slot.id === selectedSlot.id)) {
       selectedSlot = null;
       selectionExpired = true;
+      revision += 1;
     }
+    if (selectedDate && allDates.includes(selectedDate)) week = Math.floor(allDates.indexOf(selectedDate) / 7);
+    else week = Math.max(0, Math.min(Math.max(0, weekCount() - 1), week));
     if (!selectedDate || !dateSlots(selectedDate).length) {
       const keys = allDates.slice(week * 7, week * 7 + 7);
       selectedDate = keys.find(key => dateSlots(key).length) || null;
@@ -205,7 +195,8 @@
   }
 
   function changeWeek(amount) {
-    week = Math.max(0, Math.min(WEEK_COUNT - 1, week + amount));
+    revision += 1;
+    week = Math.max(0, Math.min(Math.max(0, weekCount() - 1), week + amount));
     const keys = allDates.slice(week * 7, week * 7 + 7);
     selectedDate = keys.find(key => dateSlots(key).length) || null;
     selectedSlot = null;
@@ -220,6 +211,7 @@
   get('booking-days').addEventListener('click', event => {
     const button = event.target.closest('button[data-date]');
     if (!button || button.disabled) return;
+    revision += 1;
     selectedDate = button.dataset.date;
     selectedSlot = null;
     selectionExpired = false;
@@ -231,6 +223,7 @@
   get('booking-times').addEventListener('click', event => {
     const button = event.target.closest('button[data-slot]');
     if (!button) return;
+    revision += 1;
     const slotId = button.dataset.slot;
     refreshAvailability();
     selectedSlot = slots.find(slot => slot.id === slotId) || null;
@@ -240,12 +233,26 @@
     if (selectedSlot) get('booking-times').querySelector(`[data-slot="${selectedSlot.id}"]`).focus();
   });
   document.querySelectorAll('input[name="lesson-format"]').forEach(input => input.addEventListener('change', () => {
+    revision += 1;
     format = input.value;
     renderSummary();
   }));
-  get('booking-continue').addEventListener('click', () => {
+  get('availability-retry').addEventListener('click', async () => {
+    checking = true;
+    render();
+    await window.Availability.refresh();
+    checking = false;
     refreshAvailability();
-    if (!selectedSlot) return;
+  });
+  get('booking-continue').addEventListener('click', async () => {
+    if (checking || !selectedSlot) return;
+    const attempt = { revision, id: selectedSlot.id, format };
+    checking = true;
+    renderSummary();
+    await window.Availability.refresh();
+    checking = false;
+    refreshAvailability();
+    if (attempt.revision !== revision || selectedSlot?.id !== attempt.id || format !== attempt.format) return;
     const destination = window.LessonSelection.contactUrl({ ...selectedSlot, format });
     if (destination) window.location.assign(destination);
     else {
@@ -270,9 +277,6 @@
     language = event.detail.language === 'en' ? 'en' : 'de';
     render();
   });
-  window.addEventListener('pageshow', refreshAvailability);
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) refreshAvailability();
-  });
-  render();
+  document.addEventListener('availabilitychange', refreshAvailability);
+  refreshAvailability();
 })();

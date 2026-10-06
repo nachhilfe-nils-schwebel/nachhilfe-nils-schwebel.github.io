@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "status": "unconfigured",
+  "isDemo": false,
+  "timeZone": "Europe/Berlin",
+  "durationMinutes": 45,
+  "stepMinutes": 15,
+  "generatedAt": null,
+  "validUntil": null,
+  "windowStart": "2026-10-05",
+  "windowEnd": "2026-11-02",
+  "slots": []
+}
