@@ -51,22 +51,21 @@
 
         <section class="contact-heading" aria-labelledby="contact-title">
           <h1 id="contact-title" data-contact-i18n="title">Kontakt</h1>
-          <p data-contact-i18n="intro">Schreib mir, wobei du Unterstützung in Mathe oder Physik suchst. Du kannst auch ohne Probestunde anfragen.</p>
+          <p data-contact-i18n="intro">Schreib mir, in welche Klasse du gehst und wobei du Unterstützung suchst. Du kannst auch ohne Probestunde anfragen.</p>
         </section>
 
         <form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit" method="post">
           <input id="botcheck" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" hidden aria-hidden="true">
           <fieldset class="contact-methods">
             <legend data-contact-i18n="details.title">Wie kann ich dich erreichen?</legend>
-            <p id="contact-hint" class="contact-hint" data-contact-i18n="details.hint">E-Mail-Adresse oder Telefonnummer – mindestens eines der Felder ausfüllen.</p>
             <div class="contact-fields">
               <div class="contact-field">
                 <label for="client-email" data-contact-i18n="email">E-Mail-Adresse</label>
-                <input id="client-email" name="email" type="email" autocomplete="email" aria-describedby="contact-hint contact-error">
+                <input id="client-email" name="email" type="email" autocomplete="email" aria-describedby="contact-error">
               </div>
               <div class="contact-field">
                 <label for="client-phone" data-contact-i18n="phone">Telefonnummer</label>
-                <input id="client-phone" name="phone" type="tel" autocomplete="tel" aria-describedby="contact-hint contact-error">
+                <input id="client-phone" name="phone" type="tel" autocomplete="tel" aria-describedby="contact-error">
               </div>
             </div>
             <p id="contact-error" class="contact-error" aria-live="polite" hidden></p>

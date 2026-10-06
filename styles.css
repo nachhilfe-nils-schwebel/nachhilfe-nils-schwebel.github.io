@@ -28,6 +28,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .container { max-width: 1120px; padding-left: 24px; padding-right: 24px; margin: 0 auto; }
 .skip-link { position: fixed; top: -100px; left: 20px; padding: 12px 20px; z-index: 10; background: var(--ink); color: white; }
 .skip-link:focus { top: 12px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 .site-header { display: flex; align-items: center; gap: 32px; min-height: 104px; }
 .wordmark { font-weight: 500; white-space: nowrap; }
@@ -65,18 +66,17 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .pricing-intro p { margin-top: 24px; max-width: 360px; }
 .pricing-intro .button { margin-top: 28px; }
 .pricing-intro .pricing-alternative { margin-top: 16px; }
-.price-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px; }
-.price-format h3 { font-weight: 600; }
-.price-format dl { margin: 20px 0 0; border-top: 1px solid #cfd6ca; }
-.price-row { display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 1px solid #cfd6ca; }
-.price-row dd { margin: 0; text-align: right; white-space: nowrap; }
+.price-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.price-table th, .price-table td { padding: 18px 0 18px 16px; text-align: right; white-space: nowrap; border-bottom: 1px solid #cfd6ca; }
+.price-table thead th { padding-top: 0; font-weight: 600; }
+.price-table th:first-child { width: 40%; padding-left: 0; text-align: left; }
+.price-table tbody th { font-weight: 400; }
 
 .site-footer { display: flex; justify-content: space-between; gap: 24px; font-size: var(--small); color: var(--muted); padding-top: 24px; padding-bottom: 32px; }
 .noscript-note { max-width: 750px; margin: 0 auto 32px; font-size: var(--small); padding: 0 24px; }
 
 @media (max-width: 900px) {
   .hero, .pricing-layout { gap: 40px; }
-  .price-options { gap: 24px; }
   .about-section { gap: 48px; }
   .hero-portrait, .about-portrait { height: 360px; }
   .site-header { gap: 20px; }
@@ -103,7 +103,6 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
   .container { padding-left: 20px; padding-right: 20px; }
   .main-nav { gap: 12px 10px; }
   .main-nav .nav-trial { padding-left: 10px; padding-right: 10px; }
-  .price-options { grid-template-columns: 1fr; gap: 28px; }
   .hero-portrait, .about-portrait { height: 300px; }
   .site-footer { flex-direction: column; gap: 8px; }
 }
