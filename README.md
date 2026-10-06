@@ -9,13 +9,13 @@ Run `python3 -m http.server 4173 --bind 127.0.0.1` from this folder, then open `
 ## Draft content
 
 - €25/hour is an explicitly labelled example, awaiting the final pricing.
-- The introduction and teaching approach are draft copy. No qualifications, subjects, testimonials or experience claims have been invented.
-- The trial duration of 30 minutes is illustrative. The booking page uses generated sample slots and makes no real reservations. It collects no personal information and never reads the tutor’s calendar.
-- `assets/avatar1.png` and `assets/avatar2.jpeg` are the supplied original images. The homepage uses `assets/portrait.jpg`, a compressed copy of avatar1.
+- The introduction is draft copy. No qualifications, subjects, testimonials or experience claims have been invented.
+- The trial duration of 30 minutes is illustrative. The booking page uses generated sample slots; selecting a time updates the sidebar directly and makes no real reservation. It collects no personal information and never reads the tutor’s calendar.
+- `assets/avatar1.png` and `assets/avatar2.jpeg` are the supplied original images. The homepage uses `assets/portrait.jpg`, a compressed copy of avatar1, and `assets/about.jpg`, a compressed copy of avatar2 in the about section.
 
 ## Files
 
-- `index.html`: landing page, introduction, teaching approach and pricing.
+- `index.html`: landing page, introduction with both portraits, and pricing.
 - `styles.css`: shared responsive layout and visual style.
 - `site.js`: common translations, language selection and navigation.
 - `booking.html`, `booking.css`, `booking.js`: free trial booking preview. The sample availability provider is isolated for a future calendar integration.

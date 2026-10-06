@@ -13,84 +13,49 @@
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Zum Inhalt</a>
   <header class="site-header container">
-    <a class="wordmark" href="./" data-keep-language aria-label="Nils Schwebel – Startseite">
-      <span class="brand-mark" aria-hidden="true">ns.</span>
-      <span class="brand-name">Nils Schwebel<small data-i18n="brand.sub">Persönliche Nachhilfe</small></span>
-    </a>
-    <nav class="main-nav" aria-label="Navigation">
+    <a class="wordmark" href="./" data-keep-language aria-label="Nils Schwebel – Startseite">Nils Schwebel</a>
+    <nav class="main-nav" aria-label="Hauptnavigation">
       <a href="#about" data-i18n="nav.about">Über mich</a>
       <a href="#pricing" data-i18n="nav.pricing">Preise</a>
+      <a href="booking.html" data-keep-language data-i18n="nav.trial">Probestunde</a>
     </nav>
-    <div class="header-actions">
-      <div class="language-switch" role="group" aria-label="Sprache / Language">
-        <button type="button" data-language="de" aria-pressed="true">DE</button>
-        <span aria-hidden="true">/</span>
-        <button type="button" data-language="en" aria-pressed="false">EN</button>
-      </div>
-      <a class="button button-small header-cta" href="booking.html" data-keep-language><span data-i18n="nav.trial">Probestunde</span><span aria-hidden="true">↗</span></a>
+    <div class="language-switch" role="group" aria-label="Sprache / Language">
+      <button type="button" data-language="de" aria-pressed="true">DE</button>
+      <button type="button" data-language="en" aria-pressed="false">EN</button>
     </div>
   </header>
-  <main id="main">
-    <section class="hero container" aria-labelledby="hero-title">
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Leipzig & online · Klasse 5–12</span></p>
-        <h1 id="hero-title"><span data-i18n="hero.title1">Verstehen.</span><br><em data-i18n="hero.title2">Weiterkommen.</em></h1>
-        <p class="hero-description" data-i18n="hero.description">Persönliche Nachhilfe, die dort ansetzt, wo du gerade stehst. Mit Ruhe, Struktur und Zeit für deine Fragen.</p>
-        <p class="hero-price"><span data-i18n="hero.price">Ab 25 € / Stunde</span><span class="price-asterisk" aria-hidden="true">*</span></p>
-        <div class="hero-actions">
-          <a class="button" href="booking.html" data-keep-language><span data-i18n="cta.trial">Kostenlose Probestunde</span><span aria-hidden="true">↗</span></a>
-          <a class="text-link" href="#about"><span data-i18n="cta.about">Lerne mich kennen</span><span aria-hidden="true">↓</span></a>
-        </div>
-        <p class="draft-price-note" data-i18n="price.note">* Beispielpreis für diesen Entwurf.</p>
+        <h1 id="hero-title" data-i18n="hero.title">Nachhilfe in Leipzig.</h1>
+        <p data-i18n="hero.description">Persönliche Nachhilfe für die Klassen 5–12, vor Ort oder online. Ab 25 € pro Stunde.</p>
+        <a class="button" href="booking.html" data-keep-language data-i18n="cta.trial">Kostenlose Probestunde</a>
+        <p class="note" data-i18n="price.note">25 € ist ein Beispielpreis für den Entwurf.</p>
       </div>
-      <figure class="hero-portrait">
-        <div class="portrait-frame"><img src="assets/portrait.jpg" width="1492" height="1054" alt="Nils Schwebel an seinem Schreibtisch" data-i18n-alt="portrait.alt" fetchpriority="high"></div>
-        <figcaption><span>Nils Schwebel</span><span data-i18n="portrait.caption">Dein Nachhilfelehrer in Leipzig</span></figcaption>
-      </figure>
+      <img class="hero-portrait" src="assets/portrait.jpg" width="1492" height="1054" alt="Nils Schwebel an seinem Schreibtisch" data-i18n-alt="portrait.alt" fetchpriority="high">
     </section>
-    <div class="service-strip container" aria-label="Das Angebot">
-      <div><span class="strip-number">01</span><span data-i18n="strip.grades">Für die 5. bis 12. Klasse</span></div>
-      <div><span class="strip-number">02</span><span data-i18n="strip.personal">Einzelunterricht, ganz persönlich</span></div>
-      <div><span class="strip-number">03</span><span data-i18n="strip.format">In Leipzig oder online</span></div>
-    </div>
-    <section id="about" class="about-section container section-space" aria-labelledby="about-title">
-      <div class="section-label"><span class="eyebrow" data-i18n="about.label">Über mich</span><span class="section-index" aria-hidden="true">01 /</span></div>
+    <section id="about" class="about-section" aria-labelledby="about-title">
+      <img class="about-portrait" src="assets/about.jpg" width="900" height="1200" alt="Nils Schwebel draußen im Abendlicht" data-i18n-alt="about.alt" loading="lazy">
       <div class="about-content">
-        <h2 id="about-title" data-i18n="about.title">Hallo, ich bin Nils.</h2>
-        <p class="large-copy" data-i18n="about.lead">Manchmal braucht es einfach jemanden, der sich Zeit nimmt und Dinge anders erklärt.</p>
-        <div class="about-columns">
-          <p data-i18n="about.body">Ich bin Nils Schwebel und biete private Nachhilfe für Schülerinnen und Schüler der Klassen 5 bis 12. Wir schauen gemeinsam, wo du Unterstützung brauchst, und gehen die nächsten Schritte in deinem Tempo.</p>
-          <p data-i18n="about.format">Wir können uns in Leipzig treffen oder online lernen. In einer kostenlosen Probestunde lernen wir uns kennen und besprechen, was du dir von der Nachhilfe wünschst.</p>
-        </div>
-        <p class="signature" aria-hidden="true">Nils</p>
+        <h2 id="about-title" data-i18n="about.title">Über mich</h2>
+        <p data-i18n="about.body">Ich bin Nils Schwebel und biete private Nachhilfe für Schülerinnen und Schüler der Klassen 5 bis 12. Wir schauen gemeinsam, wo du Unterstützung brauchst, und arbeiten in deinem Tempo.</p>
+        <p data-i18n="about.format">Wir können uns in Leipzig treffen oder online lernen. In der kostenlosen Probestunde besprechen wir deine Fragen und Ziele und lernen uns kennen.</p>
       </div>
     </section>
-    <section class="approach-section" aria-labelledby="approach-title">
-      <div class="container approach-layout">
-        <div class="approach-heading"><p class="eyebrow" data-i18n="approach.label">So lernen wir zusammen</p><h2 id="approach-title"><span data-i18n="approach.title1">Mehr Klarheit.</span><br><em data-i18n="approach.title2">Weniger Fragezeichen.</em></h2></div>
-        <div class="approach-list">
-          <div class="approach-item"><span class="step-number" aria-hidden="true">01</span><div><h3 data-i18n="approach.step1.title">Erst verstehen</h3><p data-i18n="approach.step1.body">Wir finden heraus, was schon gut klappt und wo es noch hakt.</p></div></div>
-          <div class="approach-item"><span class="step-number" aria-hidden="true">02</span><div><h3 data-i18n="approach.step2.title">Gemeinsam üben</h3><p data-i18n="approach.step2.body">Wir nehmen uns den Stoff Schritt für Schritt vor – mit Raum für jede Frage.</p></div></div>
-          <div class="approach-item"><span class="step-number" aria-hidden="true">03</span><div><h3 data-i18n="approach.step3.title">Sicherer weiterlernen</h3><p data-i18n="approach.step3.body">Du sollst nicht nur die Lösung kennen, sondern auch den Weg dorthin.</p></div></div>
-        </div>
+    <section id="pricing" class="pricing-section" aria-labelledby="pricing-title">
+      <div class="pricing-intro">
+        <h2 id="pricing-title" data-i18n="pricing.title">Preise</h2>
+        <p data-i18n="pricing.description">Die Probestunde ist kostenlos. Den Preis für weitere Stunden besprechen wir vorab gemeinsam.</p>
       </div>
-    </section>
-    <section id="pricing" class="pricing-section container section-space" aria-labelledby="pricing-title">
-      <div class="section-label"><span class="eyebrow" data-i18n="pricing.label">Preise & Einstieg</span><span class="section-index" aria-hidden="true">02 /</span></div>
-      <div class="pricing-content">
-        <div class="pricing-heading"><h2 id="pricing-title"><span data-i18n="pricing.title1">Ein klarer Preis.</span><br><em data-i18n="pricing.title2">Ein guter Anfang.</em></h2><p data-i18n="pricing.description">Lernen wir uns erst einmal kennen. Danach besprechen wir gemeinsam, welche Unterstützung zu dir passt.</p></div>
-        <div class="price-options">
-          <div class="price-row"><div><h3 data-i18n="pricing.trial">Die Probestunde</h3><p data-i18n="pricing.trial.description">Kennenlernen, Fragen klären, gemeinsam starten.</p></div><strong class="free-price" data-i18n="pricing.free">Kostenlos</strong></div>
-          <div class="price-row"><div><h3 data-i18n="pricing.lessons">Persönliche Nachhilfe</h3><p data-i18n="pricing.lessons.description">Einzelunterricht in Leipzig oder online.</p></div><div class="price-amount"><small data-i18n="pricing.from">ab</small> <b style="font-weight:400" data-i18n="pricing.amount">25 €</b><span data-i18n="pricing.unit">/ Stunde*</span></div></div>
-        </div>
-        <p class="pricing-note" data-i18n="pricing.note">* 25 € ist ein vorläufiger Beispielpreis. Den endgültigen Preis und die Dauer der Stunden legen wir noch fest.</p>
+      <div class="price-options">
+        <div class="price-row"><span data-i18n="pricing.trial">Probestunde</span><span data-i18n="pricing.free">Kostenlos</span></div>
+        <div class="price-row"><span data-i18n="pricing.lessons">Einzelunterricht</span><span data-i18n="pricing.rate">Ab 25 € / Stunde</span></div>
+        <p class="note" data-i18n="pricing.note">Der angegebene Preis ist vorläufig. Preis und Stundendauer legen wir noch fest.</p>
+        <a class="button" href="booking.html" data-keep-language data-i18n="cta.trial">Kostenlose Probestunde</a>
       </div>
-    </section>
-    <section class="closing-section" aria-labelledby="closing-title">
-      <div class="container closing-layout"><div><p class="eyebrow" data-i18n="closing.label">Der erste Schritt ist ganz einfach</p><h2 id="closing-title" data-i18n="closing.title">Lernen wir uns kennen.</h2><p data-i18n="closing.description">Eine kostenlose Probestunde. Zeit für deine Fragen. Und ein Gefühl dafür, ob es passt.</p></div><a class="button button-light" href="booking.html" data-keep-language><span data-i18n="cta.trial">Kostenlose Probestunde</span><span aria-hidden="true">↗</span></a></div>
     </section>
   </main>
-  <footer class="site-footer container"><span>© <span data-year>2026</span> Nils Schwebel</span><span data-i18n="footer.location">Leipzig · Online · Persönlich</span><span class="draft-label" data-i18n="footer.draft">Website-Entwurf</span></footer>
+  <footer class="site-footer container"><span>© <span data-year>2026</span> Nils Schwebel</span><span data-i18n="footer.draft">Website-Entwurf</span></footer>
   <noscript><p class="noscript-note">Die deutsche Seite ist ohne JavaScript lesbar. Für die Sprachauswahl und die Termin-Vorschau aktiviere bitte JavaScript. / Please enable JavaScript to switch language and try the booking preview.</p></noscript>
 </body>
 </html>

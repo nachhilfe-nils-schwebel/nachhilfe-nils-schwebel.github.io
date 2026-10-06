@@ -53,59 +53,37 @@
   const copy = {
     de: {
       skip: 'Zum Inhalt', back: 'Zurück zur Startseite',
-      eyebrow: 'Die erste Stunde geht auf mich', title: 'Lernen wir uns kennen.',
-      intro: 'Eine kostenlose Probestunde, um Fragen zu stellen, Ziele zu besprechen und herauszufinden, ob es passt.',
-      'demo.label': 'Terminübersicht · Vorschau',
-      'demo.text': 'Die Zeiten sind Beispiele. Die Kalenderanbindung folgt; hier wird noch kein Termin reserviert.',
-      'calendar.title': 'Finde deine Probestunde', 'format.title': 'Wo möchtest du lernen?',
-      'format.leipzig': 'In Leipzig', 'format.leipzig.note': 'Gemeinsam vor Ort',
-      'format.online': 'Online', 'format.online.note': 'Bequem von zu Hause',
-      'date.title': 'Welcher Tag passt dir?', 'date.key': 'Tag mit Beispielzeiten',
-      'time.title': 'Und welche Uhrzeit?', timezone: 'Alle Zeiten: Leipzig (Europe/Berlin)',
-      'summary.eyebrow': 'Ein guter Anfang', 'summary.title': 'Ganz in Ruhe.\nGanz ohne Druck.',
-      'summary.intro': 'Wir schauen gemeinsam, wo du gerade stehst und wie ich dich unterstützen kann.',
+      title: 'Kostenlose Probestunde',
+      'demo.text': 'Beispieltermine. Die Kalenderanbindung folgt; es wird noch kein Termin gebucht.',
+      'calendar.title': 'Termin auswählen', 'format.title': 'Unterrichtsformat',
+      'format.leipzig': 'In Leipzig', 'format.online': 'Online',
+      'date.title': 'Tag', 'time.title': 'Uhrzeit', timezone: 'Alle Zeiten: Leipzig (Europe/Berlin)',
+      'summary.title': 'Dein Termin',
       'summary.duration.label': 'Dauer', 'summary.duration': '30 Minuten (Beispiel)',
       'summary.price.label': 'Preis', 'summary.price': 'Kostenlos', 'summary.format.label': 'Format',
-      'summary.selection': 'Deine Auswahl', 'summary.review': 'Auswahl ansehen',
-      'summary.note': 'Unverbindliche Vorschau · Keine Buchung',
-      parents: 'Eltern sind beim ersten Kennenlernen selbstverständlich willkommen.',
-      'review.eyebrow': 'Deine Beispielauswahl', 'review.title': 'So könnte dein Start aussehen.',
-      'review.note': 'Das ist eine Vorschau. Es wurde kein Termin gebucht und es wurden keine Kontaktdaten erfasst. Sobald der Kalender angebunden ist, kannst du hier eine echte Probestunde reservieren.',
-      'review.reset': 'Andere Zeit ansehen ←',
+      'summary.selection': 'Deine Auswahl',
       previousWeek: 'Vorherige Woche', nextWeek: 'Nächste Woche', daysGroup: 'Tag auswählen',
       timesGroup: 'Uhrzeit auswählen', noSelection: 'Wähle einen Tag und eine Uhrzeit.',
-      chooseTime: 'Bitte wähle noch eine Uhrzeit aus.', chooseDay: 'Bitte wähle einen Tag mit Beispielzeiten aus.',
       noSlots: 'In dieser Woche gibt es keine weiteren Beispielzeiten. Schau in die nächste Woche.',
-      unavailable: 'Keine Beispielzeiten', available: 'Beispielzeiten zur Auswahl', timeSuffix: 'Uhr',
+      unavailable: 'Keine Beispielzeiten', available: 'Beispielzeiten zur Auswahl',
       titleTag: 'Kostenlose Probestunde · Nils Schwebel',
       description: 'Lerne Nils in einer kostenlosen Probestunde kennen. Entwurf mit Beispielterminen für Nachhilfe in Leipzig und online.',
     },
     en: {
       skip: 'Skip to content', back: 'Back to the homepage',
-      eyebrow: 'The first lesson is on me', title: 'Let’s get to know each other.',
-      intro: 'A free trial lesson to ask questions, talk about your goals and see whether we’re a good fit.',
-      'demo.label': 'Lesson times · Preview',
-      'demo.text': 'These are sample times. Calendar integration is coming later; no appointment is reserved here.',
-      'calendar.title': 'Find your trial lesson', 'format.title': 'Where would you like to learn?',
-      'format.leipzig': 'In Leipzig', 'format.leipzig.note': 'Together in person',
-      'format.online': 'Online', 'format.online.note': 'From the comfort of home',
-      'date.title': 'Which day works for you?', 'date.key': 'Day with sample times',
-      'time.title': 'And what time?', timezone: 'All times: Leipzig (Europe/Berlin)',
-      'summary.eyebrow': 'A good beginning', 'summary.title': 'Take your time.\nNo pressure.',
-      'summary.intro': 'We’ll look at where you are right now and how I can help you move forward.',
+      title: 'Free trial lesson',
+      'demo.text': 'Sample times. Calendar integration will follow; no lesson is booked here.',
+      'calendar.title': 'Choose a time', 'format.title': 'Lesson format',
+      'format.leipzig': 'In Leipzig', 'format.online': 'Online',
+      'date.title': 'Day', 'time.title': 'Time', timezone: 'All times: Leipzig (Europe/Berlin)',
+      'summary.title': 'Your lesson',
       'summary.duration.label': 'Duration', 'summary.duration': '30 minutes (example)',
       'summary.price.label': 'Price', 'summary.price': 'Free', 'summary.format.label': 'Format',
-      'summary.selection': 'Your selection', 'summary.review': 'Review selection',
-      'summary.note': 'Preview only · No booking',
-      parents: 'Parents are of course welcome to join our first meeting.',
-      'review.eyebrow': 'Your sample selection', 'review.title': 'This could be your first step.',
-      'review.note': 'This is a preview. No appointment has been booked and no contact details have been collected. Once the calendar is connected, you’ll be able to reserve a real trial lesson here.',
-      'review.reset': 'Explore another time ←',
+      'summary.selection': 'Your selection',
       previousWeek: 'Previous week', nextWeek: 'Next week', daysGroup: 'Choose a day',
       timesGroup: 'Choose a time', noSelection: 'Choose a day and a time.',
-      chooseTime: 'Please choose a time first.', chooseDay: 'Please choose a day with sample times.',
       noSlots: 'There are no more sample times this week. Take a look at next week.',
-      unavailable: 'No sample times', available: 'sample times to choose from', timeSuffix: '',
+      unavailable: 'No sample times', available: 'sample times to choose from',
       titleTag: 'Free trial lesson · Nils Schwebel',
       description: 'Meet Nils in a free trial lesson. Draft with sample times for private tutoring in Leipzig and online.',
     },
@@ -115,14 +93,12 @@
   const mondayOffset = (civilDate(clock.date).getUTCDay() + 6) % 7;
   const startDate = addDays(clock.date, -mondayOffset);
   const allDates = Array.from({ length: WEEK_COUNT * 7 }, (_, index) => addDays(startDate, index));
-  let slots = sampleAvailabilityProvider.getSlots(allDates);
+  const slots = sampleAvailabilityProvider.getSlots(allDates);
   let language = window.siteLanguage === 'en' ? 'en' : 'de';
   let week = slots.length ? Math.floor(allDates.indexOf(slots[0].date) / 7) : 0;
   let selectedDate = slots[0]?.date || null;
   let selectedSlot = null;
   let format = 'leipzig';
-  let feedbackKey = null;
-  let reviewVisible = false;
 
   const get = id => document.getElementById(id);
   const t = key => copy[language][key] || key;
@@ -135,8 +111,7 @@
   function applyCopy() {
     document.querySelectorAll('[data-booking-i18n]').forEach(element => {
       const value = t(element.dataset.bookingI18n);
-      // A deliberate line break in the summary heading; translation stays text.
-      element.replaceChildren(...value.split('\n').flatMap((line, index) => index ? [document.createElement('br'), document.createTextNode(line)] : [document.createTextNode(line)]));
+      element.textContent = value;
     });
     document.title = t('titleTag');
     document.querySelector('meta[name="description"]').content = t('description');
@@ -165,14 +140,11 @@
       button.setAttribute('aria-label', `${fullDate}: ${available.length ? `${available.length} ${t('available')}` : t('unavailable')}`);
       const dayName = document.createElement('span');
       dayName.className = 'day-name';
-      dayName.textContent = formattedDate(key, { weekday: 'short' }).replace('.', '');
+      dayName.textContent = formattedDate(key, { weekday: 'short' }).replace('.', '').slice(0, 2);
       const dayNumber = document.createElement('span');
       dayNumber.className = 'day-number';
       dayNumber.textContent = formattedDate(key, { day: 'numeric' });
-      const dot = document.createElement('span');
-      dot.className = 'day-dot';
-      dot.setAttribute('aria-hidden', 'true');
-      button.append(dayName, dayNumber, dot);
+      button.append(dayName, dayNumber);
       return button;
     });
     get('booking-days').replaceChildren(...buttons);
@@ -204,11 +176,6 @@
     get('selection-label').textContent = selectedSlot
       ? `${formattedDate(selectedSlot.date, { weekday: 'short', day: 'numeric', month: 'long' })} · ${displayTime(selectedSlot.time)}`
       : t('noSelection');
-    get('selection-feedback').textContent = feedbackKey ? t(feedbackKey) : '';
-    get('demo-review').hidden = !reviewVisible;
-    if (selectedSlot) {
-      get('review-details').textContent = `${formattedDate(selectedSlot.date, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} · ${displayTime(selectedSlot.time)} · ${formatName()} · ${t('summary.duration')} · ${t('summary.price')}`;
-    }
   }
 
   function render() {
@@ -218,17 +185,11 @@
     renderSummary();
   }
 
-  function hideReview() {
-    reviewVisible = false;
-    feedbackKey = null;
-  }
-
   function changeWeek(amount) {
     week = Math.max(0, Math.min(WEEK_COUNT - 1, week + amount));
     const keys = allDates.slice(week * 7, week * 7 + 7);
     selectedDate = keys.find(key => dateSlots(key).length) || null;
     selectedSlot = null;
-    hideReview();
     renderDays();
     renderTimes();
     renderSummary();
@@ -241,7 +202,6 @@
     if (!button || button.disabled) return;
     selectedDate = button.dataset.date;
     selectedSlot = null;
-    hideReview();
     renderDays();
     renderTimes();
     renderSummary();
@@ -251,45 +211,14 @@
     const button = event.target.closest('button[data-slot]');
     if (!button) return;
     selectedSlot = slots.find(slot => slot.id === button.dataset.slot) || null;
-    hideReview();
     renderTimes();
     renderSummary();
     get('booking-times').querySelector(`[data-slot="${selectedSlot.id}"]`).focus();
   });
   document.querySelectorAll('input[name="lesson-format"]').forEach(input => input.addEventListener('change', () => {
     format = input.value;
-    hideReview();
     renderSummary();
   }));
-  get('review-selection').addEventListener('click', () => {
-    // Recheck time immediately before reviewing, including on long-lived tabs.
-    slots = sampleAvailabilityProvider.getSlots(allDates);
-    if (selectedSlot && !slots.some(slot => slot.id === selectedSlot.id)) {
-      selectedSlot = null;
-      selectedDate = slots[0]?.date || null;
-      if (selectedDate) week = Math.floor(allDates.indexOf(selectedDate) / 7);
-      renderDays();
-      renderTimes();
-    }
-    if (!selectedSlot) {
-      feedbackKey = selectedDate ? 'chooseTime' : 'chooseDay';
-      renderSummary();
-      (get('booking-times').querySelector('button') || get('booking-days').querySelector('button:not(:disabled)') || get('next-week')).focus();
-      return;
-    }
-    feedbackKey = null;
-    reviewVisible = true;
-    renderSummary();
-    get('demo-review').focus({ preventScroll: true });
-    get('demo-review').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
-  });
-  get('reset-selection').addEventListener('click', () => {
-    selectedSlot = null;
-    hideReview();
-    renderTimes();
-    renderSummary();
-    (get('booking-times').querySelector('button') || get('next-week')).focus();
-  });
   // Native buttons already support Tab, Enter and Space. Arrow keys additionally
   // make the seven-day and time groups quick to browse without trapping focus.
   ['booking-days', 'booking-times'].forEach(id => get(id).addEventListener('keydown', event => {

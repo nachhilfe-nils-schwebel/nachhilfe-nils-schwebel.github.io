@@ -3,58 +3,42 @@
 
   const copy = {
     de: {
-      skip: 'Zum Inhalt', 'brand.sub': 'Persönliche Nachhilfe',
+      skip: 'Zum Inhalt',
       'nav.about': 'Über mich', 'nav.pricing': 'Preise', 'nav.trial': 'Probestunde',
-      'hero.eyebrow': 'Leipzig & online · Klasse 5–12',
-      'hero.title1': 'Verstehen.', 'hero.title2': 'Weiterkommen.',
-      'hero.description': 'Persönliche Nachhilfe, die dort ansetzt, wo du gerade stehst. Mit Ruhe, Struktur und Zeit für deine Fragen.',
-      'hero.price': 'Ab 25 € / Stunde', 'price.note': '* Beispielpreis für diesen Entwurf.',
-      'cta.trial': 'Kostenlose Probestunde', 'cta.about': 'Lerne mich kennen',
-      'portrait.alt': 'Nils Schwebel an seinem Schreibtisch', 'portrait.caption': 'Dein Nachhilfelehrer in Leipzig',
-      'strip.grades': 'Für die 5. bis 12. Klasse', 'strip.personal': 'Einzelunterricht, ganz persönlich', 'strip.format': 'In Leipzig oder online',
-      'about.label': 'Über mich', 'about.title': 'Hallo, ich bin Nils.',
-      'about.lead': 'Manchmal braucht es einfach jemanden, der sich Zeit nimmt und Dinge anders erklärt.',
-      'about.body': 'Ich bin Nils Schwebel und biete private Nachhilfe für Schülerinnen und Schüler der Klassen 5 bis 12. Wir schauen gemeinsam, wo du Unterstützung brauchst, und gehen die nächsten Schritte in deinem Tempo.',
-      'about.format': 'Wir können uns in Leipzig treffen oder online lernen. In einer kostenlosen Probestunde lernen wir uns kennen und besprechen, was du dir von der Nachhilfe wünschst.',
-      'approach.label': 'So lernen wir zusammen', 'approach.title1': 'Mehr Klarheit.', 'approach.title2': 'Weniger Fragezeichen.',
-      'approach.step1.title': 'Erst verstehen', 'approach.step1.body': 'Wir finden heraus, was schon gut klappt und wo es noch hakt.',
-      'approach.step2.title': 'Gemeinsam üben', 'approach.step2.body': 'Wir nehmen uns den Stoff Schritt für Schritt vor – mit Raum für jede Frage.',
-      'approach.step3.title': 'Sicherer weiterlernen', 'approach.step3.body': 'Du sollst nicht nur die Lösung kennen, sondern auch den Weg dorthin.',
-      'pricing.label': 'Preise & Einstieg', 'pricing.title1': 'Ein klarer Preis.', 'pricing.title2': 'Ein guter Anfang.',
-      'pricing.description': 'Lernen wir uns erst einmal kennen. Danach besprechen wir gemeinsam, welche Unterstützung zu dir passt.',
-      'pricing.trial': 'Die Probestunde', 'pricing.trial.description': 'Kennenlernen, Fragen klären, gemeinsam starten.', 'pricing.free': 'Kostenlos',
-      'pricing.lessons': 'Persönliche Nachhilfe', 'pricing.lessons.description': 'Einzelunterricht in Leipzig oder online.', 'pricing.from': 'ab', 'pricing.amount': '25 €', 'pricing.unit': '/ Stunde*',
-      'pricing.note': '* 25 € ist ein vorläufiger Beispielpreis. Den endgültigen Preis und die Dauer der Stunden legen wir noch fest.',
-      'closing.label': 'Der erste Schritt ist ganz einfach', 'closing.title': 'Lernen wir uns kennen.',
-      'closing.description': 'Eine kostenlose Probestunde. Zeit für deine Fragen. Und ein Gefühl dafür, ob es passt.',
-      'footer.location': 'Leipzig · Online · Persönlich', 'footer.draft': 'Website-Entwurf', 'booking.home': 'Zur Startseite ↗'
+      'hero.title': 'Nachhilfe in Leipzig.',
+      'hero.description': 'Persönliche Nachhilfe für die Klassen 5–12, vor Ort oder online. Ab 25 € pro Stunde.',
+      'price.note': '25 € ist ein Beispielpreis für den Entwurf.',
+      'cta.trial': 'Kostenlose Probestunde',
+      'portrait.alt': 'Nils Schwebel an seinem Schreibtisch',
+      'about.alt': 'Nils Schwebel draußen im Abendlicht',
+      'about.title': 'Über mich',
+      'about.body': 'Ich bin Nils Schwebel und biete private Nachhilfe für Schülerinnen und Schüler der Klassen 5 bis 12. Wir schauen gemeinsam, wo du Unterstützung brauchst, und arbeiten in deinem Tempo.',
+      'about.format': 'Wir können uns in Leipzig treffen oder online lernen. In der kostenlosen Probestunde besprechen wir deine Fragen und Ziele und lernen uns kennen.',
+      'pricing.title': 'Preise',
+      'pricing.description': 'Die Probestunde ist kostenlos. Den Preis für weitere Stunden besprechen wir vorab gemeinsam.',
+      'pricing.trial': 'Probestunde', 'pricing.free': 'Kostenlos',
+      'pricing.lessons': 'Einzelunterricht', 'pricing.rate': 'Ab 25 € / Stunde',
+      'pricing.note': 'Der angegebene Preis ist vorläufig. Preis und Stundendauer legen wir noch fest.',
+      'footer.draft': 'Website-Entwurf', 'booking.home': 'Zur Startseite'
     },
     en: {
-      skip: 'Skip to content', 'brand.sub': 'Private tutoring',
+      skip: 'Skip to content',
       'nav.about': 'About me', 'nav.pricing': 'Pricing', 'nav.trial': 'Free trial',
-      'hero.eyebrow': 'Leipzig & online · Grades 5–12',
-      'hero.title1': 'Understand.', 'hero.title2': 'Move forward.',
-      'hero.description': 'Personal tutoring that meets you where you are. A calm approach, a clear structure, and time for your questions.',
-      'hero.price': 'From €25 / hour', 'price.note': '* Illustrative price for this draft.',
-      'cta.trial': 'Book a free trial', 'cta.about': 'Get to know me',
-      'portrait.alt': 'Nils Schwebel at his desk', 'portrait.caption': 'Your private tutor in Leipzig',
-      'strip.grades': 'For pupils in grades 5–12', 'strip.personal': 'One-to-one, personal support', 'strip.format': 'In Leipzig or online',
-      'about.label': 'About me', 'about.title': 'Hi, I’m Nils.',
-      'about.lead': 'Sometimes all it takes is someone who makes time and explains things a little differently.',
-      'about.body': 'I’m Nils Schwebel, and I offer private tutoring for pupils in grades 5–12. Together, we look at where you need support and take the next steps at your pace.',
-      'about.format': 'We can meet in Leipzig or learn online. A free trial lesson gives us time to get acquainted and talk about what you’re looking for from tutoring.',
-      'approach.label': 'How we learn together', 'approach.title1': 'More clarity.', 'approach.title2': 'Fewer question marks.',
-      'approach.step1.title': 'Understand first', 'approach.step1.body': 'We find out what’s already going well and where things get tricky.',
-      'approach.step2.title': 'Practise together', 'approach.step2.body': 'We work through the material step by step, with space for every question.',
-      'approach.step3.title': 'Learn with confidence', 'approach.step3.body': 'You should understand how to get to the answer, as well as the answer itself.',
-      'pricing.label': 'Pricing & getting started', 'pricing.title1': 'A clear price.', 'pricing.title2': 'A good beginning.',
-      'pricing.description': 'Let’s get to know each other first. Then we’ll talk about the support that works for you.',
-      'pricing.trial': 'The trial lesson', 'pricing.trial.description': 'Get acquainted, ask questions, find your starting point.', 'pricing.free': 'Free',
-      'pricing.lessons': 'Personal tutoring', 'pricing.lessons.description': 'One-to-one sessions in Leipzig or online.', 'pricing.from': 'from', 'pricing.amount': '€25', 'pricing.unit': '/ hour*',
-      'pricing.note': '* €25 is a provisional example price. The final price and lesson duration are still to be agreed.',
-      'closing.label': 'The first step is easy', 'closing.title': 'Let’s get acquainted.',
-      'closing.description': 'A free trial lesson. Time for your questions. And a chance to see if we’re a good fit.',
-      'footer.location': 'Leipzig · Online · Personal', 'footer.draft': 'Website draft', 'booking.home': 'Back to home ↗'
+      'hero.title': 'Private tutoring in Leipzig.',
+      'hero.description': 'Personal tutoring for pupils in grades 5–12, in person or online. From €25 per hour.',
+      'price.note': '€25 is an example price for this draft.',
+      'cta.trial': 'Book a free trial',
+      'portrait.alt': 'Nils Schwebel at his desk',
+      'about.alt': 'Nils Schwebel outdoors in the evening light',
+      'about.title': 'About me',
+      'about.body': 'I’m Nils Schwebel, and I offer private tutoring for pupils in grades 5–12. Together, we look at where you need support and work at your pace.',
+      'about.format': 'We can meet in Leipzig or learn online. In the free trial lesson, we’ll discuss your questions and goals and get to know each other.',
+      'pricing.title': 'Pricing',
+      'pricing.description': 'The trial lesson is free. We’ll agree on the price of further lessons beforehand.',
+      'pricing.trial': 'Trial lesson', 'pricing.free': 'Free',
+      'pricing.lessons': 'One-to-one tutoring', 'pricing.rate': 'From €25 / hour',
+      'pricing.note': 'The price shown is provisional. The final rate and lesson duration are still to be agreed.',
+      'footer.draft': 'Website draft', 'booking.home': 'Back to home'
     }
   };
 
@@ -87,8 +71,6 @@
     if (wordmark) wordmark.setAttribute('aria-label', language === 'de' ? 'Nils Schwebel – Startseite' : 'Nils Schwebel – Home');
     const nav = document.querySelector('.main-nav');
     if (nav) nav.setAttribute('aria-label', language === 'de' ? 'Hauptnavigation' : 'Main navigation');
-    const strip = document.querySelector('.service-strip');
-    if (strip) strip.setAttribute('aria-label', language === 'de' ? 'Das Angebot' : 'Tutoring at a glance');
     if (document.getElementById('hero-title')) {
       document.title = language === 'de' ? 'Nachhilfe in Leipzig & online · Nils Schwebel' : 'Private tutoring in Leipzig & online · Nils Schwebel';
       document.querySelector('meta[name="description"]').content = language === 'de'
