@@ -1,0 +1,26 @@
+{
+  "calendar": {
+    "sourceNames": ["iCloud"],
+    "sourceIds": [],
+    "calendarNames": []
+  },
+  "availability": {
+    "timeZone": "Europe/Berlin",
+    "weekdays": [0, 1, 2, 3, 4, 5],
+    "startTime": "15:30",
+    "endTime": "19:00",
+    "durationMinutes": 45,
+    "stepMinutes": 15,
+    "bufferBeforeMinutes": 30,
+    "bufferAfterMinutes": 30,
+    "weeks": 4,
+    "minNoticeMinutes": 0,
+    "validityHours": 2
+  },
+  "pollSeconds": 60,
+  "refreshMinutes": 60,
+  "git": {
+    "remote": "origin",
+    "branch": "main"
+  }
+}

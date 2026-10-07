@@ -1,0 +1,360 @@
+.booking-main {
+  padding-top: 34px;
+  padding-bottom: 92px;
+}
+
+.booking-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted, #626c70);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.booking-back:hover {
+  color: #243e50;
+}
+
+.booking-heading {
+  padding-top: 42px;
+  margin-bottom: 32px;
+}
+
+.booking-heading h1 {
+  margin: 0;
+}
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, .9fr);
+  gap: 30px;
+  align-items: start;
+}
+
+.booking-card {
+  background: #fcfbf7;
+  border: 1px solid #dddcd3;
+  border-radius: 3px;
+  padding: 32px;
+}
+
+.booking-card-title {
+  margin: 0 0 12px;
+}
+
+.booking-calendar-note {
+  color: var(--muted, #626c70);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 28px;
+  max-width: 520px;
+}
+
+.booking-format {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.booking-format legend,
+.booking-date-section h3,
+.booking-time-section h3 {
+  margin: 0 0 16px;
+  padding: 0;
+  font-weight: 500;
+}
+
+.format-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.format-choice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid #dedfd6;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.format-choice input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #243e50;
+  cursor: pointer;
+}
+
+.format-choice:has(input:checked) {
+  border-color: #243e50;
+  background: #f0f2ed;
+}
+
+.format-choice:has(input:focus-visible) {
+  outline: 2px solid #243e50;
+  outline-offset: 4px;
+}
+
+.booking-date-section,
+.booking-time-section {
+  border-top: 1px solid #e3e3d9;
+  padding-top: 27px;
+  margin-top: 27px;
+}
+
+.week-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.week-navigation p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.week-navigation-buttons {
+  display: flex;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.week-arrow {
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: 1px solid #dcded5;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #243e50;
+}
+
+.week-arrow:hover:enabled {
+  background: #f0f2ed;
+  border-color: #243e50;
+}
+
+.week-arrow:disabled {
+  opacity: .35;
+  cursor: default;
+}
+
+.booking-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.day-button {
+  border: 1px solid #dedfd6;
+  border-radius: 3px;
+  padding: 12px 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: #243e50;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.day-button .day-name {
+  color: var(--muted, #626c70);
+  font-size: 14px;
+}
+
+.day-button .day-number {
+  font-size: 16px;
+}
+
+.day-button:disabled {
+  border-color: transparent;
+  color: #969d99;
+  cursor: default;
+}
+
+.day-button:disabled .day-name {
+  color: #969d99;
+}
+
+.day-button:hover:enabled {
+  border-color: #243e50;
+}
+
+.day-button[aria-pressed="true"] {
+  color: #fcfbf7;
+  background: #243e50;
+  border-color: #243e50;
+}
+
+.day-button[aria-pressed="true"] .day-name {
+  color: #fcfbf7;
+}
+
+.selected-day-label {
+  font-size: 14px;
+  color: var(--muted, #626c70);
+  margin: -4px 0 14px;
+}
+
+.booking-times {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+
+.time-button {
+  border: 1px solid #dedfd6;
+  border-radius: 3px;
+  background: transparent;
+  color: #243e50;
+  padding: 12px 4px;
+  cursor: pointer;
+}
+
+.time-button:hover {
+  border-color: #243e50;
+}
+
+.time-button[aria-pressed="true"] {
+  background: #243e50;
+  border-color: #243e50;
+  color: #fcfbf7;
+}
+
+.no-slots {
+  grid-column: 1 / -1;
+  color: var(--muted, #626c70);
+  margin: 0;
+}
+
+.trial-summary {
+  background: #e9ece5;
+  border: 1px solid #dfe3d9;
+  border-radius: 3px;
+  padding: 32px;
+}
+
+.trial-summary h2 {
+  margin: 0 0 24px;
+}
+
+.trial-details {
+  border-top: 1px solid #cfd6ca;
+  border-bottom: 1px solid #cfd6ca;
+  padding: 16px 0;
+  margin: 0;
+}
+
+.trial-details > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 5px 0;
+}
+
+.trial-details dt {
+  color: var(--muted, #626c70);
+}
+
+.trial-details dd {
+  margin: 0;
+  text-align: right;
+}
+
+.chosen-slot {
+  padding-top: 24px;
+}
+
+.chosen-slot > span {
+  display: block;
+  font-size: 14px;
+  color: var(--muted, #626c70);
+  margin-bottom: 8px;
+}
+
+.chosen-slot p {
+  margin: 0;
+}
+
+.booking-continue { width: 100%; margin-top: 28px; }
+.booking-error { font-size: 14px; color: #8e443a; margin-top: 12px; }
+.booking-error[hidden] { display: none; }
+
+.booking-noscript {
+  margin-top: 30px;
+}
+
+.booking-page button:focus-visible,
+.booking-page a:focus-visible {
+  outline: 2px solid #243e50;
+  outline-offset: 4px;
+}
+
+@media (max-width: 900px) {
+  .booking-card,
+  .trial-summary {
+    padding: 24px;
+  }
+
+  .booking-layout {
+    gap: 20px;
+    grid-template-columns: minmax(0, 1.4fr) minmax(260px, .9fr);
+  }
+
+  .format-choice {
+    padding: 12px;
+  }
+
+  .booking-days {
+    gap: 4px;
+  }
+}
+
+@media (max-width: 720px) {
+  .booking-main {
+    padding-top: 24px;
+    padding-bottom: 64px;
+  }
+
+  .booking-heading {
+    padding-top: 32px;
+    margin-bottom: 24px;
+  }
+
+  .booking-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .booking-card,
+  .trial-summary {
+    padding: 20px 16px;
+  }
+
+  .format-choice {
+    gap: 8px;
+    padding: 12px 10px;
+  }
+}
+
+@media (max-width: 350px) {
+  .booking-times {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+#availability-status { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+.availability-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; font-size: 14px; }
+.availability-actions button { border: 1px solid var(--line); border-radius: 3px; background: transparent; color: var(--ink); padding: 7px 12px; cursor: pointer; }
+.availability-actions button:disabled { opacity: .5; cursor: default; }

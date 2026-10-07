@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self' https://api.web3forms.com; form-action https://api.web3forms.com; object-src 'none'; base-uri 'none'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kostenlose Probestunde für Nachhilfe in Mathe und Physik, in Leipzig oder online.">
+    <meta name="theme-color" content="#f5f3ed">
+    <title>Kostenlose Probestunde · Nils Schwebel</title>
+    <link rel="canonical" href="https://nachhilfe-nils-schwebel.github.io/booking.html" data-canonical-base="https://nachhilfe-nils-schwebel.github.io/booking.html">
+    <link rel="alternate" hreflang="de" href="https://nachhilfe-nils-schwebel.github.io/booking.html">
+    <link rel="alternate" hreflang="en" href="https://nachhilfe-nils-schwebel.github.io/booking.html?lang=en">
+    <link rel="alternate" hreflang="x-default" href="https://nachhilfe-nils-schwebel.github.io/booking.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Nachhilfe Nils Schwebel">
+    <meta property="og:title" content="Kostenlose Probestunde · Nils Schwebel">
+    <meta property="og:description" content="Kostenlose Probestunde für Nachhilfe in Mathe und Physik, in Leipzig oder online.">
+    <meta property="og:url" content="https://nachhilfe-nils-schwebel.github.io/booking.html">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:locale:alternate" content="en_GB">
+    <meta property="og:image" content="https://nachhilfe-nils-schwebel.github.io/assets/portrait.jpg">
+    <meta property="og:image:alt" content="Nils Schwebel an seinem Schreibtisch">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kostenlose Probestunde · Nils Schwebel">
+    <meta name="twitter:description" content="Kostenlose Probestunde für Nachhilfe in Mathe und Physik, in Leipzig oder online.">
+    <meta name="twitter:image" content="https://nachhilfe-nils-schwebel.github.io/assets/portrait.jpg">
+    <meta name="twitter:image:alt" content="Nils Schwebel an seinem Schreibtisch">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/dm-serif-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="booking.css">
+    <script src="site.js" defer></script>
+    <script src="availability.js" defer></script>
+    <script src="lesson-selection.js" defer></script>
+    <script src="booking.js" defer></script>
+  </head>
+  <body class="booking-page">
+    <a class="skip-link" href="#main" data-booking-i18n="skip">Zum Inhalt</a>
+  <header class="site-header container">
+    <a class="wordmark" href="./" data-keep-language aria-label="Nils Schwebel – Startseite">Nils Schwebel</a>
+    <nav class="main-nav" aria-label="Hauptnavigation">
+      <a href="./#about" data-keep-language data-i18n="nav.about">Über mich</a>
+      <a href="./#pricing" data-keep-language data-i18n="nav.pricing">Preise</a>
+      <a href="contact.html?direct=1" data-keep-language data-i18n="nav.contact">Kontakt</a>
+      <a class="button nav-trial" href="booking.html" data-keep-language data-i18n="nav.trial" aria-current="page">Probestunde</a>
+    </nav>
+    <div class="language-switch" role="group" aria-label="Sprache / Language">
+      <button type="button" data-language="de" aria-pressed="true">DE</button>
+      <span aria-hidden="true">/</span>
+      <button type="button" data-language="en" aria-pressed="false">EN</button>
+    </div>
+  </header>
+
+    <main id="main" class="container booking-main">
+      <a class="booking-back" href="./" data-keep-language data-booking-i18n="back">Zurück zur Startseite</a>
+      <section class="booking-heading" aria-labelledby="booking-title">
+        <h1 id="booking-title" data-booking-i18n="title">Kostenlose Probestunde</h1>
+      </section>
+
+      <div class="booking-layout">
+        <section class="booking-card" aria-labelledby="availability-title">
+          <h2 id="availability-title" class="booking-card-title" data-booking-i18n="calendar.title">Termin auswählen</h2>
+          <p class="booking-calendar-note" role="note" data-booking-i18n="calendar.note">Die Termine werden regelmäßig aktualisiert. Ich bestätige deine Probestunde persönlich.</p>
+          <p id="availability-status" role="status">Freie Termine werden geladen …</p>
+          <div class="availability-actions">
+            <button id="availability-retry" type="button" hidden data-booking-i18n="retry">Erneut laden</button>
+            <a href="contact.html?direct=1" data-keep-language data-booking-i18n="contact">Zum Kontaktformular ↗</a>
+          </div>
+
+          <fieldset class="booking-format">
+            <legend data-booking-i18n="format.title">Unterrichtsformat</legend>
+            <div class="format-options">
+              <label class="format-choice">
+                <input type="radio" name="lesson-format" value="leipzig" checked>
+                <span data-booking-i18n="format.leipzig">In Leipzig</span>
+              </label>
+              <label class="format-choice">
+                <input type="radio" name="lesson-format" value="online">
+                <span data-booking-i18n="format.online">Online</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="booking-date-section">
+            <h3 data-booking-i18n="date.title">Tag</h3>
+            <div class="week-navigation">
+              <p id="week-label"></p>
+              <div class="week-navigation-buttons">
+                <button id="previous-week" class="week-arrow" type="button" aria-label="Vorherige Woche"><span aria-hidden="true">←</span></button>
+                <button id="next-week" class="week-arrow" type="button" aria-label="Nächste Woche"><span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+            <div id="booking-days" class="booking-days" role="group" aria-label="Tag auswählen"></div>
+          </div>
+
+          <div class="booking-time-section">
+            <h3 data-booking-i18n="time.title">Uhrzeit</h3>
+            <p id="selected-day-label" class="selected-day-label"></p>
+            <div id="booking-times" class="booking-times" role="group" aria-label="Uhrzeit auswählen"></div>
+          </div>
+        </section>
+
+        <aside class="booking-aside">
+          <section class="trial-summary" aria-labelledby="trial-title">
+            <h2 id="trial-title" data-booking-i18n="summary.title">Dein Termin</h2>
+            <dl class="trial-details">
+              <div><dt data-booking-i18n="summary.duration.label">Dauer</dt><dd data-booking-i18n="summary.duration">45 Minuten</dd></div>
+              <div><dt data-booking-i18n="summary.price.label">Preis</dt><dd data-booking-i18n="summary.price">Kostenlos</dd></div>
+              <div><dt data-booking-i18n="summary.format.label">Format</dt><dd id="summary-format">In Leipzig</dd></div>
+            </dl>
+            <div class="chosen-slot"><span data-booking-i18n="summary.selection">Deine Auswahl</span><p id="selection-label" aria-live="polite">Wähle einen Tag und eine Uhrzeit.</p></div>
+            <button id="booking-continue" class="button booking-continue" type="button" disabled data-booking-i18n="continue">Weiter zum Kontakt</button>
+            <p id="booking-error" class="booking-error" role="status" hidden></p>
+          </section>
+        </aside>
+      </div>
+
+      <noscript><p class="booking-noscript">Bitte aktiviere JavaScript, um die freien Termine anzusehen. / Enable JavaScript to view available times.</p></noscript>
+    </main>
+
+  <footer class="site-footer container"><span>© <span data-year>2026</span> Nils Schwebel</span><nav class="footer-links" aria-label="Rechtliche Informationen"><a href="imprint.html" data-keep-language data-i18n="footer.imprint">Impressum</a><a href="privacy.html" data-keep-language data-i18n="footer.privacy">Datenschutz</a></nav></footer>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+.DS_Store
+node_modules/
+.preview/
+.calendar-sync/
+server/calendar-config.local.json
+server/calendar-config.json
+/calendar-config.json
+__pycache__/
+*.py[cod]
+dist/
+
+# Local credentials, calendar exports and diagnostic logs.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.ics
+*.vcf
+*.log
+
+# Source portraits stay local; the website uses sanitized compressed copies.
+assets/avatar1.png
+assets/avatar2.jpeg
