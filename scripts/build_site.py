@@ -24,7 +24,7 @@ PUBLIC_ROOT_FILES = PUBLIC_HTML + (
     "contact-config.js", "legal.js",
     "availability.json", "robots.txt", "sitemap.xml", ".nojekyll",
 )
-PUBLIC_ASSETS = ("assets/portrait.jpg", "assets/about.jpg", "assets/favicon.svg")
+PUBLIC_ASSETS = ("assets/portrait.jpg", "assets/about.jpg", "assets/lessons.jpg", "assets/favicon.svg")
 REQUIRED_FONT_FILES = (
     "assets/fonts/dm-sans-latin.woff2", "assets/fonts/dm-serif-display-latin.woff2",
     "assets/fonts/DM-Sans-OFL.txt", "assets/fonts/DM-Serif-Display-OFL.txt", "assets/fonts/README.md",
@@ -229,8 +229,8 @@ def _validate_exif(payload: bytes):
     endian = "<" if tiff[:2] == b"II" else ">"
     if struct.unpack_from(endian + "H", tiff, 2)[0] != 42:
         raise ValueError("Invalid EXIF header")
-    # Both public photos were reviewed: about.jpg requires Orientation (0x0112)
-    # and YCbCrPositioning (0x0213); portrait.jpg needs no EXIF. ICC color profiles
+    # Public photos were reviewed: about.jpg requires Orientation (0x0112)
+    # and YCbCrPositioning (0x0213); the other photos need no EXIF. ICC color profiles
     # are separate JPEG chunks. All other EXIF requires an explicit new review.
     offset = struct.unpack_from(endian + "I", tiff, 4)[0]
     if offset != 8 or offset + 2 > len(tiff):
@@ -334,8 +334,9 @@ def _verify_public_files(root: Path, files: list[str]):
             for reference in _css_references(css):
                 _validate_reference(root, path, reference, documents)
     _validate_availability(root / "availability.json")
-    for relative in ("assets/portrait.jpg", "assets/about.jpg"):
-        _validate_photo(root / relative, relative)
+    for relative in PUBLIC_ASSETS:
+        if relative.endswith(".jpg"):
+            _validate_photo(root / relative, relative)
 
 
 def build_site(source_root: Path = ROOT) -> Path:

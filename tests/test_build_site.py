@@ -80,6 +80,7 @@ class BuildSiteTests(unittest.TestCase):
         self.write(".nojekyll", "")
         self.write("assets/portrait.jpg", jpeg())
         self.write("assets/about.jpg", jpeg())
+        self.write("assets/lessons.jpg", jpeg())
         self.write("assets/favicon.svg", '<svg xmlns="http://www.w3.org/2000/svg"></svg>')
         for filename in FONT_FILES:
             self.write(f"assets/fonts/{filename}", b"public font or license")
@@ -116,7 +117,7 @@ class BuildSiteTests(unittest.TestCase):
         output = build_site(self.root)
         expected = set(HTML_FILES + SCRIPT_FILES + STYLE_FILES) | {
             "availability.json", "robots.txt", "sitemap.xml", ".nojekyll",
-            "assets/portrait.jpg", "assets/about.jpg", "assets/favicon.svg",
+            "assets/portrait.jpg", "assets/about.jpg", "assets/lessons.jpg", "assets/favicon.svg",
         } | {f"assets/fonts/{name}" for name in FONT_FILES}
         self.assertEqual(self.public_files(output), expected)
         for file in output.rglob("*"):
@@ -125,7 +126,7 @@ class BuildSiteTests(unittest.TestCase):
         self.assertEqual(self.source_hashes(), before)
 
     def test_all_five_pages_and_required_assets_must_exist(self):
-        for filename in ("privacy.html", "legal.js", "assets/about.jpg", "assets/fonts/dm-sans-latin.woff2", "robots.txt"):
+        for filename in ("privacy.html", "legal.js", "assets/about.jpg", "assets/lessons.jpg", "assets/fonts/dm-sans-latin.woff2", "robots.txt"):
             path = self.root / filename
             original = path.read_bytes()
             path.unlink()
@@ -306,10 +307,12 @@ class BuildSiteTests(unittest.TestCase):
             (0xED, b"Photoshop 3.0\0synthetic-private-owner"),
             (0xFE, b"synthetic-private-comment"),
         )
-        for metadata in unsafe:
-            self.write("assets/about.jpg", jpeg((metadata,)))
-            with self.subTest(marker=metadata[0], payload=metadata[1][:8]), self.assertRaisesRegex(BuildError, "sensitive photo metadata"):
-                build_site(self.root)
+        for filename in ("assets/about.jpg", "assets/lessons.jpg"):
+            for metadata in unsafe:
+                self.write(filename, jpeg((metadata,)))
+                with self.subTest(filename=filename, marker=metadata[0], payload=metadata[1][:8]), self.assertRaisesRegex(BuildError, "sensitive photo metadata"):
+                    build_site(self.root)
+            self.write(filename, jpeg())
 
     def test_photo_metadata_is_checked_after_scan_data_and_invalid_exif_is_rejected(self):
         trailing_comment = jpeg()[:-2] + b"\xff\xfe\x00\x09private\xff\xd9"

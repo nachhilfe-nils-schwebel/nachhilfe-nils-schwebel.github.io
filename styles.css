@@ -75,7 +75,9 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .hero-portrait { width: 100%; height: 400px; object-fit: cover; object-position: 43% 48%; border-radius: 3px; }
 
 .about-section { display: grid; grid-template-columns: .78fr 1fr; align-items: center; gap: 96px; padding-top: 64px; padding-bottom: 88px; border-top: 1px solid var(--line); }
+.about-section--reversed { grid-template-columns: 1fr .78fr; }
 .about-portrait { width: 100%; height: 400px; object-fit: cover; object-position: center 43%; border-radius: 3px; }
+.lesson-photo { object-position: 65% center; }
 .about-content { min-width: 0; }
 .about-content p { margin-top: 24px; }
 
