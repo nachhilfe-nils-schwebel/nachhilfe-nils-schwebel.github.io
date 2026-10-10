@@ -5,22 +5,18 @@
   "timeZone": "Europe/Berlin",
   "durationMinutes": 45,
   "stepMinutes": 15,
-  "generatedAt": "2026-10-10T14:30:54Z",
-  "validUntil": "2026-10-10T16:30:54Z",
+  "generatedAt": "2026-10-10T14:45:07Z",
+  "validUntil": "2026-10-10T16:45:07Z",
   "windowStart": "2026-10-05",
   "windowEnd": "2026-11-02",
   "slots": [
     {
       "date": "2026-10-10",
-      "time": "16:45"
+      "time": "17:00"
     },
     {
       "date": "2026-10-10",
-      "time": "17:30"
-    },
-    {
-      "date": "2026-10-10",
-      "time": "18:15"
+      "time": "17:45"
     },
     {
       "date": "2026-10-14",
