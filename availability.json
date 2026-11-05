@@ -5,14 +5,14 @@
   "timeZone": "Europe/Berlin",
   "durationMinutes": 45,
   "stepMinutes": 15,
-  "generatedAt": "2026-11-05T14:30:08Z",
-  "validUntil": "2026-11-05T16:30:08Z",
+  "generatedAt": "2026-11-05T14:45:23Z",
+  "validUntil": "2026-11-05T16:45:23Z",
   "windowStart": "2026-11-02",
   "windowEnd": "2026-11-30",
   "slots": [
     {
       "date": "2026-11-05",
-      "time": "15:45"
+      "time": "16:00"
     },
     {
       "date": "2026-11-06",
