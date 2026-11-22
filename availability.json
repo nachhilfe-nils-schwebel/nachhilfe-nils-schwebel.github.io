@@ -5,10 +5,10 @@
   "timeZone": "Europe/Berlin",
   "durationMinutes": 45,
   "stepMinutes": 15,
-  "generatedAt": "2026-11-22T22:13:01Z",
-  "validUntil": "2026-11-23T00:13:01Z",
-  "windowStart": "2026-11-16",
-  "windowEnd": "2026-12-14",
+  "generatedAt": "2026-11-22T23:00:39Z",
+  "validUntil": "2026-11-23T01:00:39Z",
+  "windowStart": "2026-11-23",
+  "windowEnd": "2026-12-21",
   "slots": [
     {
       "date": "2026-11-27",
@@ -88,6 +88,30 @@
     },
     {
       "date": "2026-12-12",
+      "time": "17:45"
+    },
+    {
+      "date": "2026-12-18",
+      "time": "17:30"
+    },
+    {
+      "date": "2026-12-18",
+      "time": "18:15"
+    },
+    {
+      "date": "2026-12-19",
+      "time": "15:30"
+    },
+    {
+      "date": "2026-12-19",
+      "time": "16:15"
+    },
+    {
+      "date": "2026-12-19",
+      "time": "17:00"
+    },
+    {
+      "date": "2026-12-19",
       "time": "17:45"
     }
   ]
